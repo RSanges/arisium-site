@@ -222,17 +222,21 @@ formSignup.addEventListener('submit', async e => {
   if (pwd.length < 8)  { showMsg('signup-error', 'Le mot de passe doit contenir au moins 8 caractères.', 'error'); return; }
 
   setLoading(btn, true);
-  const { error } = await sb.auth.signUp({ email, password: pwd });
-  setLoading(btn, false);
-
-  if (error) {
-    const msg = error.message.includes('already registered')
-      ? 'Cet email est déjà utilisé. Essayez de vous connecter.'
-      : error.message;
-    showMsg('signup-error', msg, 'error');
-  } else {
-    showMsg('signup-success', '✓ Compte créé ! Vérifiez votre email pour confirmer.', 'success');
-    formSignup.reset();
+  try {
+    const { error } = await sb.auth.signUp({ email, password: pwd });
+    if (error) {
+      const msg = error.message.includes('already registered')
+        ? 'Cet email est déjà utilisé. Essayez de vous connecter.'
+        : error.message;
+      showMsg('signup-error', msg, 'error');
+    } else {
+      showMsg('signup-success', '✓ Compte créé ! Vérifiez votre email pour confirmer.', 'success');
+      formSignup.reset();
+    }
+  } catch (err) {
+    showMsg('signup-error', 'Erreur réseau. Réessayez.', 'error');
+  } finally {
+    setLoading(btn, false);
   }
 });
 
@@ -248,20 +252,24 @@ formLogin.addEventListener('submit', async e => {
   const btn   = formLogin.querySelector('.auth-submit');
 
   setLoading(btn, true);
-  const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
-  setLoading(btn, false);
-
-  if (error) {
-    const msg = error.message.includes('Invalid login')
-      ? 'Email ou mot de passe incorrect.'
-      : error.message;
-    showMsg('login-error', msg, 'error');
-  } else {
-    const u         = data.user;
-    const firstName = await fetchFirstName(u.id);
-    setNavLoggedIn(u, firstName);
-    updateMockup(firstName, u);
-    closeModal();
+  try {
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
+    if (error) {
+      const msg = error.message.includes('Invalid login')
+        ? 'Email ou mot de passe incorrect.'
+        : error.message;
+      showMsg('login-error', msg, 'error');
+    } else {
+      const u         = data.user;
+      const firstName = await fetchFirstName(u.id);
+      setNavLoggedIn(u, firstName);
+      updateMockup(firstName, u);
+      closeModal();
+    }
+  } catch (err) {
+    showMsg('login-error', 'Erreur réseau. Réessayez.', 'error');
+  } finally {
+    setLoading(btn, false);
   }
 });
 
