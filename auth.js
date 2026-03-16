@@ -91,18 +91,24 @@ function setLoading(btn, on) {
 /* ─── Phone mockup ───────────────────────────────────────────────────────────── */
 const GENERIC_NAME = 'Thomas';
 
-function phoneGreeting(name) {
-  const h = new Date().getHours();
-  const word = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
-  return `${word}, ${name}`;
+function resolveName(firstName, user) {
+  if (firstName) return firstName;
+  if (user?.email) {
+    // e.g. "jean.dupont@gmail.com" → "Jean"
+    const local = user.email.split('@')[0].split(/[._-]/)[0];
+    return local.charAt(0).toUpperCase() + local.slice(1);
+  }
+  return GENERIC_NAME;
 }
 
-function updateMockup(firstName) {
+function updateMockup(firstName, user) {
   const greetEl = document.getElementById('phone-greeting');
   const dateEl  = document.getElementById('phone-date');
 
   if (greetEl) {
-    greetEl.textContent = phoneGreeting(firstName || GENERIC_NAME);
+    const h    = new Date().getHours();
+    const word = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
+    greetEl.textContent = `${word}, ${resolveName(firstName, user)}`;
   }
   if (dateEl) {
     const d = new Date();
@@ -113,19 +119,21 @@ function updateMockup(firstName) {
 }
 
 // Initialise le mockup au chargement (date réelle + salutation générique)
-updateMockup(null);
+updateMockup(null, null);
 
 /* ─── Fetch first_name depuis user_profiles ──────────────────────────────────── */
 async function fetchFirstName(userId) {
   if (!sb) return null;
   try {
-    const { data } = await sb
+    const { data, error } = await sb
       .from('user_profiles')
       .select('first_name')
       .eq('user_id', userId)
       .maybeSingle();
+    if (error) { console.warn('[Arisium] fetchFirstName error:', error.message); return null; }
     return data?.first_name ?? null;
-  } catch {
+  } catch (err) {
+    console.warn('[Arisium] fetchFirstName exception:', err);
     return null;
   }
 }
@@ -172,21 +180,23 @@ try {
   // Session initiale
   sb.auth.getSession().then(async ({ data }) => {
     if (data?.session?.user) {
-      const firstName = await fetchFirstName(data.session.user.id);
-      setNavLoggedIn(data.session.user, firstName);
-      updateMockup(firstName);
+      const u         = data.session.user;
+      const firstName = await fetchFirstName(u.id);
+      setNavLoggedIn(u, firstName);
+      updateMockup(firstName, u);
     }
   });
 
   // Changements d'état
   sb.auth.onAuthStateChange(async (_e, session) => {
     if (session?.user) {
-      const firstName = await fetchFirstName(session.user.id);
-      setNavLoggedIn(session.user, firstName);
-      updateMockup(firstName);
+      const u         = session.user;
+      const firstName = await fetchFirstName(u.id);
+      setNavLoggedIn(u, firstName);
+      updateMockup(firstName, u);
     } else {
       setNavLoggedOut();
-      updateMockup(null);
+      updateMockup(null, null);
     }
   });
 
@@ -245,9 +255,10 @@ formLogin.addEventListener('submit', async e => {
       : error.message;
     showMsg('login-error', msg, 'error');
   } else {
-    const firstName = await fetchFirstName(data.user.id);
-    setNavLoggedIn(data.user, firstName);
-    updateMockup(firstName);
+    const u         = data.user;
+    const firstName = await fetchFirstName(u.id);
+    setNavLoggedIn(u, firstName);
+    updateMockup(firstName, u);
     closeModal();
   }
 });
@@ -256,5 +267,5 @@ formLogin.addEventListener('submit', async e => {
 async function signOut() {
   if (sb) await sb.auth.signOut();
   setNavLoggedOut();
-  updateMockup(null);
+  updateMockup(null, null);
 }
