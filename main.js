@@ -69,14 +69,14 @@ document.querySelectorAll('.faq-btn').forEach(btn => {
 });
 
 
-/* ─── Smooth anchor scroll with navbar offset ───────────────────────────────── */
+/* ─── Smooth anchor scroll ───────────────────────────────────────────────────── */
+// scroll-margin-top dans le CSS gère l'offset navbar — pas besoin de le calculer ici
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
-    const target = document.querySelector(anchor.getAttribute('href'));
+    const href   = anchor.getAttribute('href');
+    const target = href === '#' ? null : document.querySelector(href);
     if (!target) return;
     e.preventDefault();
-    const offset = navbar.offsetHeight + 24;
-    const top = target.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: 'smooth' });
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });

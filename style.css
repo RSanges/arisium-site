@@ -17,6 +17,9 @@
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; }
 
+/* Offset automatique pour tous les ancres — évite que la navbar fixe coupe le contenu */
+[id] { scroll-margin-top: 96px; }
+
 /* ─── Typography ─────────────────────────────────────────────────────────────── */
 .font-brand   { font-family: 'Cinzel', serif; font-weight: 700; }
 .font-display { font-family: 'Cormorant Garamond', serif; }
