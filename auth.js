@@ -179,9 +179,11 @@ try {
 
   // Session initiale
   sb.auth.getSession().then(async ({ data }) => {
-    if (data?.session?.user) {
-      const u         = data.session.user;
+    const u = data?.session?.user ?? null;
+    console.log('[Arisium] session:', u ? u.email : 'none');
+    if (u) {
       const firstName = await fetchFirstName(u.id);
+      console.log('[Arisium] first_name:', firstName, '| résolu:', resolveName(firstName, u));
       setNavLoggedIn(u, firstName);
       updateMockup(firstName, u);
     }
