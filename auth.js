@@ -162,8 +162,9 @@ function resolveName(firstName, user) {
 }
 
 function updateMockup(firstName, user) {
-  const greetEl = document.getElementById('phone-greeting');
-  const dateEl  = document.getElementById('phone-date');
+  const greetEl  = document.getElementById('phone-greeting');
+  const dateEl   = document.getElementById('phone-date');
+  const avatarEl = document.getElementById('phone-avatar');
   if (greetEl) {
     const h    = new Date().getHours();
     const word = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
@@ -174,6 +175,11 @@ function updateMockup(firstName, user) {
     dateEl.textContent = d.toLocaleDateString('fr-FR', {
       weekday: 'long', day: 'numeric', month: 'long',
     });
+  }
+  if (avatarEl) {
+    avatarEl.textContent = firstName?.[0]?.toUpperCase()
+      ?? user?.email?.[0]?.toUpperCase()
+      ?? 'T';
   }
 }
 
