@@ -252,8 +252,14 @@ formLogin.addEventListener('submit', async e => {
   const btn   = formLogin.querySelector('.auth-submit');
 
   setLoading(btn, true);
+  const safetyTimer = setTimeout(() => {
+    console.warn('[Arisium] login timeout — re-enabling button');
+    setLoading(btn, false);
+  }, 15000);
   try {
+    console.log('[Arisium] signInWithPassword start');
     const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
+    console.log('[Arisium] signInWithPassword done', { error: error?.message, user: data?.user?.email });
     if (error) {
       const msg = error.message.includes('Invalid login')
         ? 'Email ou mot de passe incorrect.'
@@ -267,8 +273,10 @@ formLogin.addEventListener('submit', async e => {
       closeModal();
     }
   } catch (err) {
+    console.error('[Arisium] login exception:', err);
     showMsg('login-error', 'Erreur réseau. Réessayez.', 'error');
   } finally {
+    clearTimeout(safetyTimer);
     setLoading(btn, false);
   }
 });
