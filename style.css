@@ -73,11 +73,14 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-s
 .btn-outline {
   display: inline-block;
   padding: 13px 28px;
+  background: transparent;
   border: 1px solid var(--border);
   color: var(--text-sec);
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.875rem;
   border-radius: 12px;
   text-decoration: none;
+  cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
 }
 .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
