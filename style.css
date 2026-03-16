@@ -14,11 +14,14 @@
 
 /* ─── Reset & Base ───────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  /* scroll-padding-top = hauteur navbar fixe → le browser s'arrête au bon endroit
+     sur tous les ancres (#features, #pricing…) sans calcul JS */
+  scroll-padding-top: 80px;
+}
 body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; }
-
-/* Offset automatique pour tous les ancres — évite que la navbar fixe coupe le contenu */
-[id] { scroll-margin-top: 96px; }
 
 /* ─── Typography ─────────────────────────────────────────────────────────────── */
 .font-brand   { font-family: 'Cinzel', serif; font-weight: 700; }
