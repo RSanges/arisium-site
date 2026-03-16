@@ -1,4 +1,70 @@
-/* ─── Supabase Auth — Arisium Landing Page ───────────────────────────────────── */
+/* ─── Supabase Auth — Arisium Landing Page (fetch natif, sans SDK) ────────────── */
+
+/* ─── Config ─────────────────────────────────────────────────────────────────── */
+const SUPABASE_URL  = 'https://nyxenthjdmesyldymxcn.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55eGVudGhqZG1lc3lsZHlteGNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxOTEzODMsImV4cCI6MjA4ODc2NzM4M30.LSuLxy6iJ2El5OBKbbrWHmFbGKqlhW6tXLYiHjSgvSM';
+const STORAGE_KEY   = 'sb-nyxenthjdmesyldymxcn-auth-token';
+
+/* ─── Session locale (localStorage) ─────────────────────────────────────────── */
+function getStoredSession() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    // Expire dans moins de 60 s → considère invalide
+    if (s.expires_at && s.expires_at < Math.round(Date.now() / 1000) + 60) return null;
+    return s;
+  } catch { return null; }
+}
+
+function saveSession(s) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      access_token:  s.access_token,
+      token_type:    s.token_type    || 'bearer',
+      expires_in:    s.expires_in    || 3600,
+      expires_at:    s.expires_at    || Math.round(Date.now() / 1000) + (s.expires_in || 3600),
+      refresh_token: s.refresh_token,
+      user:          s.user,
+    }));
+  } catch {}
+}
+
+function clearSession() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch {}
+}
+
+/* ─── REST helpers ───────────────────────────────────────────────────────────── */
+async function authPost(path, body, token) {
+  const r = await fetch(`${SUPABASE_URL}/auth/v1${path}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type':  'application/json',
+      'apikey':        SUPABASE_KEY,
+      'Authorization': `Bearer ${token || SUPABASE_KEY}`,
+    },
+    body: JSON.stringify(body),
+  });
+  return r.json();
+}
+
+async function fetchFirstName(userId, accessToken) {
+  try {
+    const r = await fetch(
+      `${SUPABASE_URL}/rest/v1/user_profiles?user_id=eq.${encodeURIComponent(userId)}&select=first_name&limit=1`,
+      {
+        headers: {
+          'apikey':        SUPABASE_KEY,
+          'Authorization': `Bearer ${accessToken}`,
+          'Accept':        'application/json',
+        },
+      },
+    );
+    if (!r.ok) return null;
+    const rows = await r.json();
+    return rows[0]?.first_name ?? null;
+  } catch { return null; }
+}
 
 /* ─── DOM refs stables ───────────────────────────────────────────────────────── */
 const modal       = document.getElementById('auth-modal');
@@ -27,28 +93,23 @@ modalClose.addEventListener('click', closeModal);
 modalOvl.addEventListener('click', closeModal);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-/* ─── Délégation globale (robuste aux re-renders du DOM) ─────────────────────── */
+/* ─── Délégation globale ─────────────────────────────────────────────────────── */
 document.addEventListener('click', e => {
   const t = e.target;
-
-  // Ouvrir modal
   if (t.closest('.js-open-auth')) {
     e.preventDefault();
     openModal('login');
     return;
   }
-  // Toggle dropdown user
   if (t.closest('.js-user-menu-btn')) {
     e.stopPropagation();
     navAuthArea.querySelector('.js-user-dropdown')?.classList.toggle('open');
     return;
   }
-  // Déconnexion
   if (t.closest('.js-signout')) {
     signOut();
     return;
   }
-  // Fermer dropdown si clic ailleurs
   if (!t.closest('.nav-user-menu')) {
     navAuthArea.querySelector('.js-user-dropdown')?.classList.remove('open');
   }
@@ -94,7 +155,6 @@ const GENERIC_NAME = 'Thomas';
 function resolveName(firstName, user) {
   if (firstName) return firstName;
   if (user?.email) {
-    // e.g. "jean.dupont@gmail.com" → "Jean"
     const local = user.email.split('@')[0].split(/[._-]/)[0];
     return local.charAt(0).toUpperCase() + local.slice(1);
   }
@@ -104,7 +164,6 @@ function resolveName(firstName, user) {
 function updateMockup(firstName, user) {
   const greetEl = document.getElementById('phone-greeting');
   const dateEl  = document.getElementById('phone-date');
-
   if (greetEl) {
     const h    = new Date().getHours();
     const word = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
@@ -118,29 +177,10 @@ function updateMockup(firstName, user) {
   }
 }
 
-// Initialise le mockup au chargement (date réelle + salutation générique)
 updateMockup(null, null);
-
-/* ─── Fetch first_name depuis user_profiles ──────────────────────────────────── */
-async function fetchFirstName(userId) {
-  if (!sb) return null;
-  try {
-    const { data, error } = await sb
-      .from('user_profiles')
-      .select('first_name')
-      .eq('user_id', userId)
-      .maybeSingle();
-    if (error) { console.warn('[Arisium] fetchFirstName error:', error.message); return null; }
-    return data?.first_name ?? null;
-  } catch (err) {
-    console.warn('[Arisium] fetchFirstName exception:', err);
-    return null;
-  }
-}
 
 /* ─── Navbar state ───────────────────────────────────────────────────────────── */
 function setNavLoggedIn(user, firstName) {
-  // Initiale : prénom en priorité, sinon première lettre de l'email
   const initial = firstName
     ? firstName[0].toUpperCase()
     : (user.email || '?')[0].toUpperCase();
@@ -167,58 +207,19 @@ function setNavLoggedOut() {
     <a href="#pricing" class="btn-primary nav-cta" style="padding:11px 24px">Essai gratuit 7 jours →</a>`;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   Init Supabase — isolé dans un try/catch pour ne pas bloquer le modal
-══════════════════════════════════════════════════════════════════════════════ */
-let sb = null;
-
-try {
-  const SUPABASE_URL  = 'https://nyxenthjdmesyldymxcn.supabase.co';
-  const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55eGVudGhqZG1lc3lsZHlteGNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxOTEzODMsImV4cCI6MjA4ODc2NzM4M30.LSuLxy6iJ2El5OBKbbrWHmFbGKqlhW6tXLYiHjSgvSM';
-  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-    auth: {
-      // Désactive le mécanisme navigator.locks (verrou inter-onglets)
-      // qui reste bloqué dans certains navigateurs et empêche les promesses auth de se résoudre
-      lock: async (_name, _timeout, fn) => fn(),
-      detectSessionInUrl: false,
-    },
-  });
-
-  // Session initiale
-  sb.auth.getSession().then(async ({ data }) => {
-    const u = data?.session?.user ?? null;
-    console.log('[Arisium] session:', u ? u.email : 'none');
-    if (u) {
-      const firstName = await fetchFirstName(u.id);
-      console.log('[Arisium] first_name:', firstName, '| résolu:', resolveName(firstName, u));
-      setNavLoggedIn(u, firstName);
-      updateMockup(firstName, u);
-    }
-  });
-
-  // Changements d'état
-  sb.auth.onAuthStateChange(async (_e, session) => {
-    if (session?.user) {
-      const u         = session.user;
-      const firstName = await fetchFirstName(u.id);
-      setNavLoggedIn(u, firstName);
-      updateMockup(firstName, u);
-    } else {
-      setNavLoggedOut();
-      updateMockup(null, null);
-    }
-  });
-
-} catch (err) {
-  console.error('[Arisium] Supabase init failed:', err);
-}
+/* ─── Session au chargement ──────────────────────────────────────────────────── */
+(async () => {
+  const session = getStoredSession();
+  if (!session?.user) return;
+  const firstName = await fetchFirstName(session.user.id, session.access_token);
+  setNavLoggedIn(session.user, firstName);
+  updateMockup(firstName, session.user);
+})();
 
 /* ─── Sign up ────────────────────────────────────────────────────────────────── */
 formSignup.addEventListener('submit', async e => {
   e.preventDefault();
   clearMessages();
-
-  if (!sb) { showMsg('signup-error', 'Service indisponible. Réessayez plus tard.', 'error'); return; }
 
   const email   = document.getElementById('signup-email').value.trim();
   const pwd     = document.getElementById('signup-password').value;
@@ -230,17 +231,18 @@ formSignup.addEventListener('submit', async e => {
 
   setLoading(btn, true);
   try {
-    const { error } = await sb.auth.signUp({ email, password: pwd });
-    if (error) {
-      const msg = error.message.includes('already registered')
+    const data = await authPost('/signup', { email, password: pwd });
+    if (data.error || data.msg) {
+      const raw = data.error_description || data.msg || data.error || '';
+      const msg = raw.includes('already registered')
         ? 'Cet email est déjà utilisé. Essayez de vous connecter.'
-        : error.message;
+        : raw || 'Erreur inconnue.';
       showMsg('signup-error', msg, 'error');
     } else {
       showMsg('signup-success', '✓ Compte créé ! Vérifiez votre email pour confirmer.', 'success');
       formSignup.reset();
     }
-  } catch (err) {
+  } catch {
     showMsg('signup-error', 'Erreur réseau. Réessayez.', 'error');
   } finally {
     setLoading(btn, false);
@@ -252,51 +254,48 @@ formLogin.addEventListener('submit', async e => {
   e.preventDefault();
   clearMessages();
 
-  if (!sb) { showMsg('login-error', 'Service indisponible. Réessayez plus tard.', 'error'); return; }
-
   const email = document.getElementById('login-email').value.trim();
   const pwd   = document.getElementById('login-password').value;
   const btn   = formLogin.querySelector('.auth-submit');
 
   setLoading(btn, true);
-  const safetyTimer = setTimeout(() => {
-    console.warn('[Arisium] login timeout — re-enabling button');
-    setLoading(btn, false);
-  }, 15000);
   try {
-    console.log('[Arisium] signInWithPassword start');
-    const authTimeout = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('timeout')), 10000)
-    );
-    const { data, error } = await Promise.race([
-      sb.auth.signInWithPassword({ email, password: pwd }),
-      authTimeout,
-    ]);
-    console.log('[Arisium] signInWithPassword done', { error: error?.message, user: data?.user?.email });
-    if (error) {
-      const msg = error.message.includes('Invalid login')
+    const data = await authPost('/token?grant_type=password', { email, password: pwd });
+    if (data.error || data.error_code) {
+      const raw = data.error_description || data.msg || data.error || '';
+      const msg = raw.toLowerCase().includes('invalid login')
         ? 'Email ou mot de passe incorrect.'
-        : error.message;
+        : raw || 'Email ou mot de passe incorrect.';
       showMsg('login-error', msg, 'error');
     } else {
-      const u         = data.user;
-      const firstName = await fetchFirstName(u.id);
-      setNavLoggedIn(u, firstName);
-      updateMockup(firstName, u);
+      saveSession(data);
+      const firstName = await fetchFirstName(data.user.id, data.access_token);
+      setNavLoggedIn(data.user, firstName);
+      updateMockup(firstName, data.user);
       closeModal();
     }
-  } catch (err) {
-    console.error('[Arisium] login exception:', err);
+  } catch {
     showMsg('login-error', 'Erreur réseau. Réessayez.', 'error');
   } finally {
-    clearTimeout(safetyTimer);
     setLoading(btn, false);
   }
 });
 
 /* ─── Sign out ───────────────────────────────────────────────────────────────── */
 async function signOut() {
-  if (sb) await sb.auth.signOut();
+  const session = getStoredSession();
+  clearSession();
+  // Appel backend en arrière-plan (best-effort)
+  if (session?.access_token) {
+    fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+      method: 'POST',
+      headers: {
+        'apikey':        SUPABASE_KEY,
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type':  'application/json',
+      },
+    }).catch(() => {});
+  }
   setNavLoggedOut();
   updateMockup(null, null);
 }
