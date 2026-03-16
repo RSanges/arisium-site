@@ -4,7 +4,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-/* ─── DOM refs ───────────────────────────────────────────────────────────────── */
+/* ─── DOM refs (stables, jamais remplacés) ───────────────────────────────────── */
 const modal        = document.getElementById('auth-modal');
 const modalOverlay = document.getElementById('auth-overlay');
 const modalClose   = document.getElementById('auth-close');
@@ -12,9 +12,16 @@ const tabLogin     = document.getElementById('tab-login');
 const tabSignup    = document.getElementById('tab-signup');
 const formLogin    = document.getElementById('form-login');
 const formSignup   = document.getElementById('form-signup');
-const btnOpenLogin = document.getElementById('btn-open-auth');    // nav desktop
-const btnOpenMob   = document.getElementById('btn-open-auth-mob'); // nav mobile
 const navAuthArea  = document.getElementById('nav-auth-area');
+
+/* ─── Délégation d'événement — ouvre le modal sur tout .js-open-auth ────────── */
+// Fonctionne même si le DOM est reécrit par updateNavbar()
+document.addEventListener('click', e => {
+  if (e.target.closest('.js-open-auth')) {
+    e.preventDefault();
+    openModal('login');
+  }
+});
 
 /* ─── Open / close modal ─────────────────────────────────────────────────────── */
 function openModal(tab = 'login') {
@@ -32,9 +39,6 @@ function closeModal() {
 modalClose.addEventListener('click', closeModal);
 modalOverlay.addEventListener('click', closeModal);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-btnOpenLogin?.addEventListener('click', e => { e.preventDefault(); openModal('login'); });
-btnOpenMob?.addEventListener('click',   e => { e.preventDefault(); openModal('login'); });
 
 /* ─── Tab switch ─────────────────────────────────────────────────────────────── */
 function switchTab(tab) {
@@ -77,54 +81,65 @@ function setLoading(btn, loading) {
   btn.textContent = loading ? 'Chargement...' : btn.dataset.label;
 }
 
-/* ─── Update navbar after auth ───────────────────────────────────────────────── */
+/* ─── Update navbar après auth ───────────────────────────────────────────────── */
 function updateNavbar(user) {
   if (!navAuthArea) return;
+
   if (user) {
-    const email = user.email || '';
+    // Connecté : avatar + dropdown
+    const email    = user.email || '';
     const initials = email.slice(0, 2).toUpperCase();
     navAuthArea.innerHTML = `
-      <div class="nav-user-menu" id="user-menu-wrap">
-        <button class="nav-user-btn" id="user-menu-btn" title="${email}">
+      <div class="nav-user-menu">
+        <button class="nav-user-btn js-user-menu-btn" title="${email}">
           <span class="nav-avatar">${initials}</span>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
             <path d="M2 4l4 4 4-4"/>
           </svg>
         </button>
-        <div class="user-dropdown" id="user-dropdown">
+        <div class="user-dropdown js-user-dropdown">
           <div class="user-dropdown-email">${email}</div>
           <div class="user-dropdown-divider"></div>
-          <button class="user-dropdown-item" id="btn-signout">Se déconnecter</button>
+          <button class="user-dropdown-item js-signout">Se déconnecter</button>
         </div>
       </div>
     `;
-    document.getElementById('user-menu-btn')?.addEventListener('click', e => {
-      e.stopPropagation();
-      document.getElementById('user-dropdown')?.classList.toggle('open');
-    });
-    document.addEventListener('click', () => {
-      document.getElementById('user-dropdown')?.classList.remove('open');
-    });
-    document.getElementById('btn-signout')?.addEventListener('click', signOut);
   } else {
+    // Déconnecté : bouton Connexion + CTA
     navAuthArea.innerHTML = `
-      <a href="#" id="btn-open-auth" class="btn-outline" style="padding:10px 20px;font-size:0.8125rem">Connexion</a>
+      <button class="btn-outline js-open-auth" style="padding:10px 20px;font-size:0.8125rem;cursor:pointer">Connexion</button>
       <a href="#pricing" class="btn-primary nav-cta" style="padding:11px 24px">Essai gratuit 7 jours →</a>
     `;
-    document.getElementById('btn-open-auth')?.addEventListener('click', e => {
-      e.preventDefault(); openModal('login');
-    });
   }
 }
+
+/* ─── Délégation pour le dropdown utilisateur ───────────────────────────────── */
+// Délégué sur document → fonctionne même après updateNavbar()
+document.addEventListener('click', e => {
+  // Toggle dropdown
+  if (e.target.closest('.js-user-menu-btn')) {
+    e.stopPropagation();
+    navAuthArea.querySelector('.js-user-dropdown')?.classList.toggle('open');
+    return;
+  }
+  // Fermer dropdown si clic en dehors
+  if (!e.target.closest('.nav-user-menu')) {
+    navAuthArea.querySelector('.js-user-dropdown')?.classList.remove('open');
+  }
+  // Déconnexion
+  if (e.target.closest('.js-signout')) {
+    signOut();
+  }
+});
 
 /* ─── Sign up ────────────────────────────────────────────────────────────────── */
 formSignup.addEventListener('submit', async e => {
   e.preventDefault();
   clearErrors();
 
-  const email    = formSignup.querySelector('#signup-email').value.trim();
-  const password = formSignup.querySelector('#signup-password').value;
-  const confirm  = formSignup.querySelector('#signup-confirm').value;
+  const email    = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const confirm  = document.getElementById('signup-confirm').value;
   const btn      = formSignup.querySelector('.auth-submit');
 
   if (password !== confirm) {
@@ -157,8 +172,8 @@ formLogin.addEventListener('submit', async e => {
   e.preventDefault();
   clearErrors();
 
-  const email    = formLogin.querySelector('#login-email').value.trim();
-  const password = formLogin.querySelector('#login-password').value;
+  const email    = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
   const btn      = formLogin.querySelector('.auth-submit');
 
   setLoading(btn, true);
@@ -184,7 +199,8 @@ async function signOut() {
 
 /* ─── Session check on load ──────────────────────────────────────────────────── */
 supabase.auth.getSession().then(({ data }) => {
-  updateNavbar(data?.session?.user ?? null);
+  if (data?.session?.user) updateNavbar(data.session.user);
+  // Pas de updateNavbar(null) : le HTML statique est déjà correct pour l'état déconnecté
 });
 
 supabase.auth.onAuthStateChange((_event, session) => {
