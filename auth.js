@@ -287,6 +287,54 @@ formLogin.addEventListener('submit', async e => {
   }
 });
 
+/* ─── Waitlist ───────────────────────────────────────────────────────────────── */
+async function handleWaitlist(e, id) {
+  e.preventDefault();
+  const form  = e.target;
+  const input = form.querySelector('.waitlist-input');
+  const btn   = form.querySelector('.waitlist-submit');
+  const msg   = document.getElementById(`waitlist-${id}-msg`);
+  const email = input.value.trim();
+  if (!email) return;
+
+  const origLabel = btn.textContent;
+  btn.disabled    = true;
+  btn.textContent = 'Inscription...';
+  msg.textContent = '';
+  msg.className   = 'waitlist-msg';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey':       SUPABASE_KEY,
+        'Prefer':       'return=minimal',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (res.status === 201) {
+      msg.textContent = '✓ Inscrit ! Vous serez notifié dès le lancement.';
+      msg.className   = 'waitlist-msg success';
+      input.value     = '';
+      btn.textContent = '✓ Inscrit';
+    } else if (res.status === 409) {
+      msg.textContent = 'Cet email est déjà inscrit.';
+      msg.className   = 'waitlist-msg error';
+      btn.disabled    = false;
+      btn.textContent = origLabel;
+    } else {
+      throw new Error(`HTTP ${res.status}`);
+    }
+  } catch {
+    msg.textContent = 'Une erreur est survenue. Réessayez.';
+    msg.className   = 'waitlist-msg error';
+    btn.disabled    = false;
+    btn.textContent = origLabel;
+  }
+}
+
 /* ─── Sign out ───────────────────────────────────────────────────────────────── */
 async function signOut() {
   const session = getStoredSession();
