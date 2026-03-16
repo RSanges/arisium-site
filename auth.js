@@ -175,7 +175,14 @@ let sb = null;
 try {
   const SUPABASE_URL  = 'https://nyxenthjdmesyldymxcn.supabase.co';
   const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55eGVudGhqZG1lc3lsZHlteGNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxOTEzODMsImV4cCI6MjA4ODc2NzM4M30.LSuLxy6iJ2El5OBKbbrWHmFbGKqlhW6tXLYiHjSgvSM';
-  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: {
+      // Désactive le mécanisme navigator.locks (verrou inter-onglets)
+      // qui reste bloqué dans certains navigateurs et empêche les promesses auth de se résoudre
+      lock: async (_name, _timeout, fn) => fn(),
+      detectSessionInUrl: false,
+    },
+  });
 
   // Session initiale
   sb.auth.getSession().then(async ({ data }) => {
