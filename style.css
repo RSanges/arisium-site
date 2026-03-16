@@ -360,24 +360,27 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-s
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 10px 14px;
   background: var(--elevated);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
+  border-left-width: 3px; /* override via inline style par item */
+  gap: 12px;
 }
-.ai-item-name { font-size: 0.875rem; color: var(--text); font-weight: 500; }
-.ai-item-kcal { font-size: 0.75rem; color: var(--text-sec); }
+.ai-item-name { font-size: 0.8125rem; color: var(--text); font-weight: 500; }
+.ai-item-kcal { font-size: 0.7rem; color: var(--text-sec); margin-top: 2px; }
 .ai-item-badge {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 700;
   padding: 3px 8px;
   border-radius: 100px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  flex-shrink: 0;
 }
-.badge-high   { background: rgba(74,222,128,0.12); color: #4ADE80; }
-.badge-medium { background: rgba(251,191,36,0.12);  color: #FBBF24; }
-.badge-low    { background: rgba(248,113,113,0.12); color: #F87171; }
+.badge-high   { background: rgba(74,222,128,0.1);  color: #4ADE80; }
+.badge-medium { background: rgba(251,191,36,0.1);  color: #FBBF24; }
+.badge-low    { background: rgba(248,113,113,0.1); color: #F87171; }
 
 /* Workout mockup */
 .set-row {

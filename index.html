@@ -247,53 +247,74 @@
 
       <div class="feature-visual fade-up delay-2">
         <div class="feature-visual-inner">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:0.8125rem;font-weight:600;color:#F5F0E8">Estimation IA</span>
+
+          <!-- En-tête -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+            <div>
+              <div style="font-size:0.625rem;letter-spacing:2px;text-transform:uppercase;color:#5C5650;margin-bottom:3px">Analyse IA</div>
+              <div style="font-size:0.9375rem;font-weight:600;color:#F5F0E8">Estimation du repas</div>
+            </div>
             <div class="ai-chip">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2zm0 18a8 8 0 100-16 8 8 0 000 16zm-1-9h2v6h-2zm0-4h2v2h-2z"/></svg>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2zm0 18a8 8 0 100-16 8 8 0 000 16zm-1-9h2v6h-2zm0-4h2v2h-2z"/></svg>
               Claude Vision
             </div>
           </div>
 
-          <div style="font-size:0.75rem;color:#8A8078">Photo analysée · 3 aliments détectés</div>
+          <!-- Statut -->
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+            <span style="width:5px;height:5px;border-radius:50%;background:#4ADE80;flex-shrink:0;display:inline-block"></span>
+            <span style="font-size:0.75rem;color:#5C5650">3 aliments détectés</span>
+          </div>
 
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div class="ai-item">
+          <!-- Items -->
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="ai-item" style="border-left:3px solid #4ADE80">
               <div>
                 <div class="ai-item-name">Blanc de poulet grillé</div>
-                <div class="ai-item-kcal">150g · 248 kcal · 46g P</div>
+                <div class="ai-item-kcal">150 g · 248 kcal · P 46g</div>
               </div>
-              <span class="ai-item-badge badge-high">Haut</span>
+              <span class="ai-item-badge badge-high">Sûr</span>
             </div>
-            <div class="ai-item">
+            <div class="ai-item" style="border-left:3px solid #FBBF24">
               <div>
                 <div class="ai-item-name">Riz blanc cuit</div>
-                <div class="ai-item-kcal">200g · 260 kcal · 5g P</div>
+                <div class="ai-item-kcal">200 g · 260 kcal · G 52g</div>
               </div>
-              <span class="ai-item-badge badge-medium">Moyen</span>
+              <span class="ai-item-badge badge-medium">Incertain</span>
             </div>
-            <div class="ai-item">
+            <div class="ai-item" style="border-left:3px solid #4ADE80">
               <div>
                 <div class="ai-item-name">Brocoli vapeur</div>
-                <div class="ai-item-kcal">120g · 41 kcal · 4g P</div>
+                <div class="ai-item-kcal">120 g · 41 kcal · P 4g</div>
               </div>
-              <span class="ai-item-badge badge-high">Haut</span>
+              <span class="ai-item-badge badge-high">Sûr</span>
             </div>
           </div>
 
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#1A1A1A;border-radius:12px;border:1px solid rgba(201,169,110,0.2)">
+          <!-- Total -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(201,169,110,0.06);border:1px solid rgba(201,169,110,0.18);border-radius:12px;margin-top:2px">
             <div>
-              <div style="font-size:0.75rem;color:#8A8078">Total estimé</div>
-              <div style="font-size:1.125rem;font-family:'Cinzel',serif;color:#F5F0E8">549 kcal</div>
+              <div style="font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;color:#8A8078;margin-bottom:2px">Total</div>
+              <div style="font-size:1.25rem;font-family:'Cinzel',serif;color:#C9A96E;letter-spacing:1px">549 kcal</div>
             </div>
-            <div style="display:flex;gap:16px">
-              <div style="text-align:center"><div style="font-size:0.875rem;font-weight:600;color:#7B68EE">55g</div><div style="font-size:0.65rem;color:#5C5650">Prot.</div></div>
-              <div style="text-align:center"><div style="font-size:0.875rem;font-weight:600;color:#FFB347">46g</div><div style="font-size:0.65rem;color:#5C5650">Gluc.</div></div>
-              <div style="text-align:center"><div style="font-size:0.875rem;font-weight:600;color:#87CEEB">8g</div><div style="font-size:0.65rem;color:#5C5650">Lip.</div></div>
+            <div style="display:flex;gap:20px">
+              <div style="text-align:center">
+                <div style="font-size:0.875rem;font-weight:600;color:#F5F0E8">55g</div>
+                <div style="font-size:0.65rem;color:#5C5650;margin-top:1px">Prot.</div>
+              </div>
+              <div style="width:1px;background:#2A2A2A;align-self:stretch"></div>
+              <div style="text-align:center">
+                <div style="font-size:0.875rem;font-weight:600;color:#F5F0E8">46g</div>
+                <div style="font-size:0.65rem;color:#5C5650;margin-top:1px">Gluc.</div>
+              </div>
+              <div style="width:1px;background:#2A2A2A;align-self:stretch"></div>
+              <div style="text-align:center">
+                <div style="font-size:0.875rem;font-weight:600;color:#F5F0E8">8g</div>
+                <div style="font-size:0.65rem;color:#5C5650;margin-top:1px">Lip.</div>
+              </div>
             </div>
           </div>
 
-          <a href="#waitlist" class="btn-primary" style="text-align:center;width:100%">Être notifié au lancement →</a>
         </div>
       </div>
     </div>
