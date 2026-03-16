@@ -88,19 +88,65 @@ function setLoading(btn, on) {
   btn.textContent = on ? 'Chargement...' : btn.dataset.label;
 }
 
+/* ─── Phone mockup ───────────────────────────────────────────────────────────── */
+const GENERIC_NAME = 'Thomas';
+
+function phoneGreeting(name) {
+  const h = new Date().getHours();
+  const word = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
+  return `${word}, ${name}`;
+}
+
+function updateMockup(firstName) {
+  const greetEl = document.getElementById('phone-greeting');
+  const dateEl  = document.getElementById('phone-date');
+
+  if (greetEl) {
+    greetEl.textContent = phoneGreeting(firstName || GENERIC_NAME);
+  }
+  if (dateEl) {
+    const d = new Date();
+    dateEl.textContent = d.toLocaleDateString('fr-FR', {
+      weekday: 'long', day: 'numeric', month: 'long',
+    });
+  }
+}
+
+// Initialise le mockup au chargement (date réelle + salutation générique)
+updateMockup(null);
+
+/* ─── Fetch first_name depuis user_profiles ──────────────────────────────────── */
+async function fetchFirstName(userId) {
+  if (!sb) return null;
+  try {
+    const { data } = await sb
+      .from('user_profiles')
+      .select('first_name')
+      .eq('user_id', userId)
+      .maybeSingle();
+    return data?.first_name ?? null;
+  } catch {
+    return null;
+  }
+}
+
 /* ─── Navbar state ───────────────────────────────────────────────────────────── */
-function setNavLoggedIn(user) {
-  const initials = (user.email || '??').slice(0, 2).toUpperCase();
+function setNavLoggedIn(user, firstName) {
+  // Initiale : prénom en priorité, sinon première lettre de l'email
+  const initial = firstName
+    ? firstName[0].toUpperCase()
+    : (user.email || '?')[0].toUpperCase();
+
   navAuthArea.innerHTML = `
     <div class="nav-user-menu">
       <button class="nav-user-btn js-user-menu-btn" title="${user.email}">
-        <span class="nav-avatar">${initials}</span>
+        <span class="nav-avatar">${initial}</span>
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M2 4l4 4 4-4"/>
         </svg>
       </button>
       <div class="user-dropdown js-user-dropdown">
-        <div class="user-dropdown-email">${user.email}</div>
+        <div class="user-dropdown-email">${firstName ? firstName + ' · ' : ''}${user.email}</div>
         <div class="user-dropdown-divider"></div>
         <button class="user-dropdown-item js-signout">Se déconnecter</button>
       </div>
@@ -124,14 +170,24 @@ try {
   sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   // Session initiale
-  sb.auth.getSession().then(({ data }) => {
-    if (data?.session?.user) setNavLoggedIn(data.session.user);
+  sb.auth.getSession().then(async ({ data }) => {
+    if (data?.session?.user) {
+      const firstName = await fetchFirstName(data.session.user.id);
+      setNavLoggedIn(data.session.user, firstName);
+      updateMockup(firstName);
+    }
   });
 
   // Changements d'état
-  sb.auth.onAuthStateChange((_e, session) => {
-    if (session?.user) setNavLoggedIn(session.user);
-    else setNavLoggedOut();
+  sb.auth.onAuthStateChange(async (_e, session) => {
+    if (session?.user) {
+      const firstName = await fetchFirstName(session.user.id);
+      setNavLoggedIn(session.user, firstName);
+      updateMockup(firstName);
+    } else {
+      setNavLoggedOut();
+      updateMockup(null);
+    }
   });
 
 } catch (err) {
@@ -189,7 +245,9 @@ formLogin.addEventListener('submit', async e => {
       : error.message;
     showMsg('login-error', msg, 'error');
   } else {
-    setNavLoggedIn(data.user);
+    const firstName = await fetchFirstName(data.user.id);
+    setNavLoggedIn(data.user, firstName);
+    updateMockup(firstName);
     closeModal();
   }
 });
@@ -198,4 +256,5 @@ formLogin.addEventListener('submit', async e => {
 async function signOut() {
   if (sb) await sb.auth.signOut();
   setNavLoggedOut();
+  updateMockup(null);
 }
