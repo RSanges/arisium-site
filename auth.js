@@ -258,7 +258,13 @@ formLogin.addEventListener('submit', async e => {
   }, 15000);
   try {
     console.log('[Arisium] signInWithPassword start');
-    const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
+    const authTimeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('timeout')), 10000)
+    );
+    const { data, error } = await Promise.race([
+      sb.auth.signInWithPassword({ email, password: pwd }),
+      authTimeout,
+    ]);
     console.log('[Arisium] signInWithPassword done', { error: error?.message, user: data?.user?.email });
     if (error) {
       const msg = error.message.includes('Invalid login')
