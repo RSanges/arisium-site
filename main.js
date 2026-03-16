@@ -69,14 +69,11 @@ document.querySelectorAll('.faq-btn').forEach(btn => {
 });
 
 
-/* ─── Smooth anchor scroll ───────────────────────────────────────────────────── */
-// scroll-margin-top dans le CSS gère l'offset navbar — pas besoin de le calculer ici
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', e => {
-    const href   = anchor.getAttribute('href');
-    const target = href === '#' ? null : document.querySelector(href);
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+/* ─── Anchor links ───────────────────────────────────────────────────────────── */
+// Le scroll est géré nativement par :
+//   html { scroll-behavior: smooth }  → animation fluide
+//   [id]  { scroll-margin-top: 96px } → offset navbar automatique
+// On intercepte uniquement href="#" pour éviter le saut en haut de page.
+document.querySelectorAll('a[href="#"]').forEach(a => {
+  a.addEventListener('click', e => e.preventDefault());
 });
