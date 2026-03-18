@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Politique de confidentialité — Arisium</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .legal-page { max-width: 780px; margin: 0 auto; padding: 120px 24px 80px; }
+    .legal-back { display: inline-flex; align-items: center; gap: 8px; color: var(--text-sec); font-size: 0.875rem; text-decoration: none; margin-bottom: 48px; transition: color .2s; }
+    .legal-back:hover { color: var(--gold); }
+    .legal-back svg { width: 16px; height: 16px; }
+    .legal-eyebrow { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
+    .legal-title { font-family: 'Cinzel', serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .legal-updated { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+    .legal-section { margin-bottom: 40px; }
+    .legal-section h2 { font-family: 'Cinzel', serif; font-size: 1.125rem; font-weight: 600; color: var(--gold); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .legal-section h3 { font-size: 0.9375rem; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+    .legal-section p { color: var(--text-sec); line-height: 1.75; margin-bottom: 12px; font-size: 0.9375rem; }
+    .legal-section ul { list-style: none; padding: 0; }
+    .legal-section ul li { color: var(--text-sec); line-height: 1.75; font-size: 0.9375rem; padding-left: 20px; margin-bottom: 6px; position: relative; }
+    .legal-section ul li::before { content: '–'; position: absolute; left: 0; color: var(--gold); }
+    .legal-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.875rem; }
+    .legal-table th { background: var(--elevated); color: var(--text); font-weight: 600; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+    .legal-table td { color: var(--text-sec); padding: 10px 14px; border: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+    .legal-table tr:nth-child(even) td { background: #0A0A0A; }
+    .legal-placeholder { color: var(--gold); font-style: italic; }
+    .legal-nav { display: flex; justify-content: center; gap: 24px; margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+    .legal-nav a { color: var(--text-sec); font-size: 0.875rem; text-decoration: none; transition: color .2s; }
+    .legal-nav a:hover { color: var(--gold); }
+    a { color: var(--gold); }
+    .rights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; }
+    .rights-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+    .rights-item strong { display: block; color: var(--text); font-size: 0.875rem; margin-bottom: 4px; }
+    .rights-item span { color: var(--text-sec); font-size: 0.8125rem; line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<div class="legal-page">
+
+  <a class="legal-back" href="/">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 12L6 8l4-4"/>
+    </svg>
+    Retour à l'accueil
+  </a>
+
+  <div class="legal-eyebrow">Légal</div>
+  <h1 class="legal-title">Politique de confidentialité</h1>
+  <p class="legal-updated">Dernière mise à jour : 18 mars 2026 — Conforme au Règlement (UE) 2016/679 (RGPD)</p>
+
+  <!-- 1. Responsable -->
+  <div class="legal-section">
+    <h2>1. Responsable du traitement</h2>
+    <p>Le responsable du traitement des données personnelles collectées via l'application et le site Arisium est :</p>
+    <ul>
+      <li>Dénomination : <span class="legal-placeholder">[RAISON SOCIALE]</span></li>
+      <li>Adresse : <span class="legal-placeholder">[ADRESSE SIÈGE SOCIAL]</span></li>
+      <li>Email : <a href="mailto:contact@arisium.app">contact@arisium.app</a></li>
+    </ul>
+    <h3>Délégué à la Protection des Données (DPO)</h3>
+    <p>Pour toute question relative à la protection de vos données personnelles, vous pouvez contacter notre DPO à l'adresse : <a href="mailto:dpo@arisium.app">dpo@arisium.app</a></p>
+  </div>
+
+  <!-- 2. Données collectées -->
+  <div class="legal-section">
+    <h2>2. Données personnelles collectées</h2>
+
+    <h3>2.1 Données de compte</h3>
+    <ul>
+      <li>Adresse email (identifiant de connexion)</li>
+      <li>Mot de passe (stocké sous forme hachée — jamais en clair)</li>
+      <li>Date de création du compte</li>
+    </ul>
+
+    <h3>2.2 Données de profil utilisateur</h3>
+    <ul>
+      <li>Prénom</li>
+      <li>Objectif fitness (prise de masse, perte de poids, maintien, etc.)</li>
+      <li>Poids cible, taille</li>
+      <li>Niveau d'activité physique</li>
+    </ul>
+
+    <h3>2.3 Données de santé et de forme physique</h3>
+    <p>Ces données sont considérées comme des données de catégorie particulière au sens de l'article 9 du RGPD. Leur traitement est fondé sur votre consentement explicite lors de la création de compte.</p>
+    <ul>
+      <li>Poids corporel et historique de poids</li>
+      <li>Données nutritionnelles : repas enregistrés, aliments, macronutriments (calories, protéines, glucides, lipides)</li>
+      <li>Données d'entraînement : séances, exercices réalisés, séries, répétitions, charges</li>
+      <li>Photos de progression corporelle (fonctionnalité premium uniquement — avec consentement explicite)</li>
+      <li>Photos de repas transmises à l'IA pour estimation nutritionnelle (non stockées de manière permanente)</li>
+    </ul>
+
+    <h3>2.4 Données techniques</h3>
+    <ul>
+      <li>Adresse IP (journaux de connexion)</li>
+      <li>Type d'appareil, système d'exploitation, version de l'application</li>
+      <li>Identifiants de session</li>
+      <li>Données de navigation sur le site web</li>
+    </ul>
+  </div>
+
+  <!-- 3. Finalités et bases légales -->
+  <div class="legal-section">
+    <h2>3. Finalités et bases légales du traitement</h2>
+    <table class="legal-table">
+      <thead>
+        <tr>
+          <th>Finalité</th>
+          <th>Données concernées</th>
+          <th>Base légale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Création et gestion du compte utilisateur</td>
+          <td>Email, mot de passe, prénom</td>
+          <td>Exécution du contrat (Art. 6.1.b)</td>
+        </tr>
+        <tr>
+          <td>Fourniture des fonctionnalités de l'application</td>
+          <td>Données nutritionnelles, entraînements, métriques corporelles</td>
+          <td>Exécution du contrat (Art. 6.1.b)</td>
+        </tr>
+        <tr>
+          <td>Analyse IA des photos de repas</td>
+          <td>Photos transmises ponctuellement à l'API Anthropic</td>
+          <td>Consentement (Art. 6.1.a + Art. 9.2.a)</td>
+        </tr>
+        <tr>
+          <td>Stockage des photos de progression</td>
+          <td>Photos corporelles (abonnés premium)</td>
+          <td>Consentement (Art. 6.1.a + Art. 9.2.a)</td>
+        </tr>
+        <tr>
+          <td>Calcul de statistiques et suivi de progression</td>
+          <td>Ensemble des données de santé et fitness</td>
+          <td>Exécution du contrat (Art. 6.1.b)</td>
+        </tr>
+        <tr>
+          <td>Gestion de l'abonnement premium</td>
+          <td>Statut d'abonnement (données de paiement gérées exclusivement par Apple/Google)</td>
+          <td>Exécution du contrat (Art. 6.1.b)</td>
+        </tr>
+        <tr>
+          <td>Envoi de communications transactionnelles</td>
+          <td>Email</td>
+          <td>Exécution du contrat (Art. 6.1.b)</td>
+        </tr>
+        <tr>
+          <td>Sécurité et prévention des fraudes</td>
+          <td>Données techniques, journaux de connexion</td>
+          <td>Intérêt légitime (Art. 6.1.f)</td>
+        </tr>
+        <tr>
+          <td>Respect des obligations légales</td>
+          <td>Données de facturation, journaux</td>
+          <td>Obligation légale (Art. 6.1.c)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. Sous-traitants -->
+  <div class="legal-section">
+    <h2>4. Sous-traitants et transferts de données</h2>
+    <p>Nous faisons appel aux prestataires suivants dans le cadre du service. Chaque transfert est encadré par des garanties appropriées (clauses contractuelles types ou décision d'adéquation) :</p>
+    <table class="legal-table">
+      <thead>
+        <tr>
+          <th>Prestataire</th>
+          <th>Rôle</th>
+          <th>Localisation des données</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Supabase</strong></td>
+          <td>Base de données, authentification, stockage des fichiers (photos)</td>
+          <td>Union européenne (EU West)</td>
+        </tr>
+        <tr>
+          <td><strong>Anthropic, Inc.</strong></td>
+          <td>Analyse IA des photos de repas (API Claude Vision) — photos transmises à la demande, non conservées par Anthropic au-delà du traitement</td>
+          <td>États-Unis (transfert encadré par les clauses contractuelles types UE)</td>
+        </tr>
+        <tr>
+          <td><strong>Vercel Inc.</strong></td>
+          <td>Hébergement du site web marketing</td>
+          <td>États-Unis / CDN mondial</td>
+        </tr>
+        <tr>
+          <td><strong>Apple Inc.</strong></td>
+          <td>Distribution de l'application iOS et traitement des paiements in-app (App Store)</td>
+          <td>Soumis à la politique de confidentialité d'Apple</td>
+        </tr>
+        <tr>
+          <td><strong>Google LLC</strong></td>
+          <td>Distribution de l'application Android et traitement des paiements in-app (Google Play)</td>
+          <td>Soumis à la politique de confidentialité de Google</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Nous ne vendons, ne louons et ne partageons pas vos données personnelles avec des tiers à des fins publicitaires ou commerciales.</p>
+  </div>
+
+  <!-- 5. Paiements -->
+  <div class="legal-section">
+    <h2>5. Paiements in-app</h2>
+    <p>Les paiements liés à l'abonnement premium Arisium sont traités exclusivement par <strong>Apple Inc.</strong> (App Store) sur iOS et par <strong>Google LLC</strong> (Google Play) sur Android.</p>
+    <p>Arisium ne collecte, ne stocke et n'a jamais accès à vos informations de paiement (numéro de carte, coordonnées bancaires). Ces données sont traitées directement par Apple ou Google, selon leurs propres politiques de confidentialité.</p>
+    <p>Arisium reçoit uniquement la confirmation du statut d'abonnement (actif / expiré / en essai) fournie par la plateforme.</p>
+  </div>
+
+  <!-- 6. Durée de conservation -->
+  <div class="legal-section">
+    <h2>6. Durée de conservation</h2>
+    <table class="legal-table">
+      <thead>
+        <tr>
+          <th>Catégorie de données</th>
+          <th>Durée de conservation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Données de compte et de profil</td>
+          <td>Jusqu'à la suppression du compte, puis 30 jours (période de grâce)</td>
+        </tr>
+        <tr>
+          <td>Données nutritionnelles et d'entraînement</td>
+          <td>Durée de vie du compte actif</td>
+        </tr>
+        <tr>
+          <td>Photos de repas (analyse IA)</td>
+          <td>Non stockées de manière permanente — traitées et supprimées après analyse</td>
+        </tr>
+        <tr>
+          <td>Photos de progression corporelle</td>
+          <td>Durée de vie du compte actif, supprimées immédiatement sur demande</td>
+        </tr>
+        <tr>
+          <td>Journaux de connexion et données techniques</td>
+          <td>90 jours glissants</td>
+        </tr>
+        <tr>
+          <td>Données de facturation (statut d'abonnement)</td>
+          <td>10 ans (obligation légale comptable)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 7. Cookies -->
+  <div class="legal-section">
+    <h2>7. Cookies et technologies similaires</h2>
+    <p>Le site arisium.app utilise des cookies strictement nécessaires au fonctionnement du service :</p>
+    <ul>
+      <li><strong>Cookie de session d'authentification</strong> : maintient votre connexion lors de la visite du site (stocké en localStorage). Aucune durée de vie excessive.</li>
+    </ul>
+    <p>Nous n'utilisons pas de cookies publicitaires, de suivi comportemental, ou de cookies tiers à des fins analytiques commerciales.</p>
+  </div>
+
+  <!-- 8. Droits des personnes -->
+  <div class="legal-section">
+    <h2>8. Vos droits</h2>
+    <p>Conformément au RGPD (Articles 15 à 22), vous disposez des droits suivants sur vos données personnelles :</p>
+    <div class="rights-grid">
+      <div class="rights-item">
+        <strong>Droit d'accès</strong>
+        <span>Obtenir une copie de vos données personnelles que nous détenons.</span>
+      </div>
+      <div class="rights-item">
+        <strong>Droit de rectification</strong>
+        <span>Corriger toute donnée inexacte ou incomplète.</span>
+      </div>
+      <div class="rights-item">
+        <strong>Droit à l'effacement</strong>
+        <span>Demander la suppression de votre compte et de toutes vos données ("droit à l'oubli").</span>
+      </div>
+      <div class="rights-item">
+        <strong>Droit à la portabilité</strong>
+        <span>Recevoir vos données dans un format structuré et lisible par machine.</span>
+      </div>
+      <div class="rights-item">
+        <strong>Droit d'opposition</strong>
+        <span>Vous opposer à un traitement fondé sur l'intérêt légitime.</span>
+      </div>
+      <div class="rights-item">
+        <strong>Droit de limitation</strong>
+        <span>Demander la suspension temporaire du traitement de vos données.</span>
+      </div>
+      <div class="rights-item">
+        <strong>Retrait du consentement</strong>
+        <span>Retirer votre consentement à tout moment pour les traitements qui y sont fondés.</span>
+      </div>
+      <div class="rights-item">
+        <strong>Suppression du compte</strong>
+        <span>Accessible directement depuis les paramètres de l'application.</span>
+      </div>
+    </div>
+    <p style="margin-top: 20px;">Pour exercer vos droits, contactez notre DPO : <a href="mailto:dpo@arisium.app">dpo@arisium.app</a>. Nous répondrons dans un délai d'un mois (Art. 12 RGPD).</p>
+    <p>En cas de réponse insatisfaisante, vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) : <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a> — 3 Place de Fontenoy, 75007 Paris.</p>
+  </div>
+
+  <!-- 9. Sécurité -->
+  <div class="legal-section">
+    <h2>9. Sécurité des données</h2>
+    <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données :</p>
+    <ul>
+      <li>Chiffrement TLS/HTTPS sur toutes les communications</li>
+      <li>Mots de passe stockés sous forme hachée (bcrypt via Supabase Auth)</li>
+      <li>Row Level Security (RLS) : chaque utilisateur n'accède qu'à ses propres données, même au niveau de la base de données</li>
+      <li>Accès aux données restreint aux seuls membres de l'équipe qui en ont besoin</li>
+      <li>Revue régulière des accès et des permissions</li>
+    </ul>
+    <p>En cas de violation de données susceptible d'engendrer un risque pour vos droits et libertés, nous notifierons la CNIL dans les 72 heures et vous en informerons sans délai indu.</p>
+  </div>
+
+  <!-- 10. Modifications -->
+  <div class="legal-section">
+    <h2>10. Modifications de la politique</h2>
+    <p>Nous pouvons mettre à jour cette politique de confidentialité pour refléter des évolutions légales, réglementaires ou liées au service. La date de dernière mise à jour est indiquée en haut de ce document.</p>
+    <p>En cas de modification substantielle, nous vous en informerons par email ou par notification dans l'application, au moins 30 jours avant l'entrée en vigueur des changements.</p>
+  </div>
+
+  <!-- 11. Contact -->
+  <div class="legal-section">
+    <h2>11. Contact</h2>
+    <p>Pour toute question relative à cette politique ou à l'exercice de vos droits :</p>
+    <ul>
+      <li>Email général : <a href="mailto:contact@arisium.app">contact@arisium.app</a></li>
+      <li>DPO : <a href="mailto:dpo@arisium.app">dpo@arisium.app</a></li>
+    </ul>
+  </div>
+
+  <nav class="legal-nav">
+    <a href="/conditions-utilisation">Conditions d'utilisation</a>
+    <a href="/mentions-legales">Mentions légales</a>
+    <a href="mailto:contact@arisium.app">Contact</a>
+  </nav>
+
+</div>
+
+</body>
+</html>

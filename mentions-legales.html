@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mentions légales — Arisium</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .legal-page { max-width: 780px; margin: 0 auto; padding: 120px 24px 80px; }
+    .legal-back { display: inline-flex; align-items: center; gap: 8px; color: var(--text-sec); font-size: 0.875rem; text-decoration: none; margin-bottom: 48px; transition: color .2s; }
+    .legal-back:hover { color: var(--gold); }
+    .legal-back svg { width: 16px; height: 16px; }
+    .legal-eyebrow { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
+    .legal-title { font-family: 'Cinzel', serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .legal-updated { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+    .legal-section { margin-bottom: 40px; }
+    .legal-section h2 { font-family: 'Cinzel', serif; font-size: 1.125rem; font-weight: 600; color: var(--gold); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .legal-section h3 { font-size: 0.9375rem; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+    .legal-section p { color: var(--text-sec); line-height: 1.75; margin-bottom: 12px; font-size: 0.9375rem; }
+    .legal-section ul { list-style: none; padding: 0; }
+    .legal-section ul li { color: var(--text-sec); line-height: 1.75; font-size: 0.9375rem; padding-left: 20px; margin-bottom: 6px; position: relative; }
+    .legal-section ul li::before { content: '–'; position: absolute; left: 0; color: var(--gold); }
+    .legal-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.875rem; }
+    .legal-table th { background: var(--elevated); color: var(--text); font-weight: 600; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+    .legal-table td { color: var(--text-sec); padding: 10px 14px; border: 1px solid var(--border); vertical-align: top; }
+    .legal-table tr:nth-child(even) td { background: #0A0A0A; }
+    .legal-placeholder { color: var(--gold); font-style: italic; }
+    .legal-nav { display: flex; justify-content: center; gap: 24px; margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+    .legal-nav a { color: var(--text-sec); font-size: 0.875rem; text-decoration: none; transition: color .2s; }
+    .legal-nav a:hover { color: var(--gold); }
+    a { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="legal-page">
+
+  <a class="legal-back" href="/">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 12L6 8l4-4"/>
+    </svg>
+    Retour à l'accueil
+  </a>
+
+  <div class="legal-eyebrow">Légal</div>
+  <h1 class="legal-title">Mentions légales</h1>
+  <p class="legal-updated">Dernière mise à jour : 18 mars 2026</p>
+
+  <!-- 1. Éditeur -->
+  <div class="legal-section">
+    <h2>1. Éditeur du site</h2>
+    <p>Le site <strong>arisium.app</strong> est édité par :</p>
+    <ul>
+      <li>Raison sociale : <span class="legal-placeholder">[RAISON SOCIALE]</span></li>
+      <li>Forme juridique : <span class="legal-placeholder">[FORME JURIDIQUE — ex : SASU, SAS, Auto-entrepreneur]</span></li>
+      <li>Capital social : <span class="legal-placeholder">[CAPITAL SOCIAL]</span></li>
+      <li>Siège social : <span class="legal-placeholder">[ADRESSE COMPLÈTE DU SIÈGE SOCIAL]</span></li>
+      <li>Numéro SIRET : <span class="legal-placeholder">[NUMÉRO SIRET]</span></li>
+      <li>RCS : <span class="legal-placeholder">[VILLE] B [NUMÉRO RCS]</span></li>
+      <li>Numéro de TVA intracommunautaire : <span class="legal-placeholder">[NUMÉRO TVA — si applicable]</span></li>
+    </ul>
+    <h3>Directeur de publication</h3>
+    <p>Romain Sanges — <a href="mailto:contact@arisium.app">contact@arisium.app</a></p>
+  </div>
+
+  <!-- 2. Hébergement -->
+  <div class="legal-section">
+    <h2>2. Hébergement</h2>
+    <p>Le site arisium.app est hébergé par :</p>
+    <ul>
+      <li><strong>Vercel Inc.</strong></li>
+      <li>340 Pine Street, Suite 701, San Francisco, CA 94104, États-Unis</li>
+      <li>Site web : <a href="https://vercel.com" target="_blank" rel="noopener">https://vercel.com</a></li>
+    </ul>
+  </div>
+
+  <!-- 3. Infrastructure & base de données -->
+  <div class="legal-section">
+    <h2>3. Infrastructure & base de données</h2>
+    <p>Les données utilisateurs sont hébergées par :</p>
+    <ul>
+      <li><strong>Supabase Inc.</strong> — Infrastructure cloud</li>
+      <li>970 Toa Payoh North, #07-04, Singapour 318992 (siège social)</li>
+      <li>Données stockées dans des data centers situés dans l'Union européenne (région EU West)</li>
+      <li>Site web : <a href="https://supabase.com" target="_blank" rel="noopener">https://supabase.com</a></li>
+    </ul>
+  </div>
+
+  <!-- 4. Propriété intellectuelle -->
+  <div class="legal-section">
+    <h2>4. Propriété intellectuelle</h2>
+    <p>L'ensemble des éléments constituant le site arisium.app (structure, design, textes, logos, graphismes, images, code source) est protégé par les lois françaises et internationales relatives à la propriété intellectuelle.</p>
+    <p>Toute reproduction, représentation, modification, publication, adaptation ou exploitation, totale ou partielle, de ces éléments, par quelque procédé ou support que ce soit, est interdite sans l'autorisation écrite préalable de l'éditeur.</p>
+    <p>Le nom <strong>Arisium</strong>, le logo et l'identité visuelle associée sont des marques ou dénominations appartenant à leur propriétaire. Toute utilisation non autorisée constitue une contrefaçon.</p>
+  </div>
+
+  <!-- 5. Liens hypertextes -->
+  <div class="legal-section">
+    <h2>5. Liens hypertextes</h2>
+    <p>Le site peut contenir des liens vers des sites tiers. L'éditeur n'exerce aucun contrôle sur ces sites et ne saurait être tenu responsable de leur contenu, de leur politique de confidentialité ou de leurs pratiques.</p>
+    <p>La création de liens hypertextes pointant vers arisium.app nécessite l'autorisation préalable de l'éditeur.</p>
+  </div>
+
+  <!-- 6. Limitation de responsabilité -->
+  <div class="legal-section">
+    <h2>6. Limitation de responsabilité</h2>
+    <p>Les informations contenues sur ce site sont fournies à titre indicatif. L'éditeur s'efforce de les maintenir à jour mais ne garantit pas leur exhaustivité, leur exactitude ou leur adéquation à un usage particulier.</p>
+    <p>L'éditeur ne saurait être tenu responsable des dommages directs ou indirects résultant de l'utilisation du site, d'une interruption d'accès ou de la présence de virus informatiques.</p>
+    <p>Les estimations nutritionnelles générées par intelligence artificielle sont fournies à titre indicatif uniquement. Elles ne constituent pas un avis médical ou diététique professionnel.</p>
+  </div>
+
+  <!-- 7. Droit applicable -->
+  <div class="legal-section">
+    <h2>7. Droit applicable</h2>
+    <p>Les présentes mentions légales sont régies par le droit français, notamment la loi n° 2004-575 du 21 juin 2004 pour la Confiance dans l'Économie Numérique (LCEN).</p>
+    <p>Pour toute question relative au présent site, vous pouvez contacter l'éditeur à l'adresse suivante : <a href="mailto:contact@arisium.app">contact@arisium.app</a></p>
+  </div>
+
+  <nav class="legal-nav">
+    <a href="/conditions-utilisation">Conditions d'utilisation</a>
+    <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+    <a href="mailto:contact@arisium.app">Contact</a>
+  </nav>
+
+</div>
+
+</body>
+</html>
