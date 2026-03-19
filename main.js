@@ -77,3 +77,40 @@ document.querySelectorAll('.faq-btn').forEach(btn => {
 document.querySelectorAll('a[href="#"]').forEach(a => {
   a.addEventListener('click', e => e.preventDefault());
 });
+
+
+/* ─── Primus CTA → scroll to waitlist with context ─────────────────────────── */
+let primusMode = false;
+
+document.querySelectorAll('[data-primus="true"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    primusMode = true;
+
+    const ctaBtn = document.getElementById('waitlist-cta-btn');
+    const ctaEmail = document.getElementById('waitlist-cta-email');
+    if (ctaBtn) ctaBtn.textContent = 'Réserver ma place Primus →';
+    if (ctaEmail) ctaEmail.placeholder = 'ton@email.com';
+
+    document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ─── Waitlist form success message ─────────────────────────────────────────── */
+// Override handleWaitlist if it exists to show Primus-specific message
+const _origHandleWaitlist = window.handleWaitlist;
+window.handleWaitlist = function(e, source) {
+  if (typeof _origHandleWaitlist === 'function') {
+    _origHandleWaitlist(e, source);
+  }
+
+  // After submission, if Primus mode, update the success message
+  if (primusMode && source === 'cta') {
+    setTimeout(() => {
+      const msg = document.getElementById('waitlist-cta-msg');
+      if (msg && msg.classList.contains('success')) {
+        msg.textContent = 'Ta place Primus est réservée. Tu recevras un accès prioritaire au lancement.';
+      }
+    }, 500);
+  }
+};

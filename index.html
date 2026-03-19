@@ -86,14 +86,14 @@
           <form class="waitlist-form" id="waitlist-hero" onsubmit="handleWaitlist(event,'hero')">
             <div class="waitlist-row">
               <input type="email" class="waitlist-input" id="waitlist-hero-email" placeholder="ton@email.com" autocomplete="email" required />
-              <button type="submit" class="btn-primary waitlist-submit" id="waitlist-hero-btn">Être notifié au lancement →</button>
+              <button type="submit" class="btn-primary waitlist-submit" id="waitlist-hero-btn">Réserver ma place fondateur →</button>
             </div>
             <div class="waitlist-msg" id="waitlist-hero-msg"></div>
           </form>
         </div>
 
         <p class="fade-up delay-3" style="font-size:0.8125rem;color:#5C5650">
-          Gratuit · Aucun spam · Notifié en avant-première au lancement
+          Gratuit · <span class="primus-counter-num">87</span>/100 places Primus restantes · Accès Pantheon au prix Colosseum
         </p>
       </div>
 
@@ -182,6 +182,48 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── FONDATEUR ────────────────────────────────────────────────────────────── -->
+<section class="section-sm" style="border-bottom:1px solid #2A2A2A">
+  <div class="container">
+    <div class="founder-grid">
+
+      <!-- Photo -->
+      <div class="founder-photo-wrap fade-up">
+        <div class="founder-photo">
+          <!-- Remplacer le src par ta vraie photo -->
+          <img src="https://placehold.co/400x480/0F0F0F/C9A96E?text=Romain" alt="Romain, fondateur d'Arisium" class="founder-img" />
+        </div>
+      </div>
+
+      <!-- Texte -->
+      <div class="fade-up delay-2">
+        <div class="eyebrow"><span class="eyebrow-dot"></span>Le fondateur</div>
+        <h2 class="section-title">117 kg. Zéro app<br>qui fait le taf.</h2>
+        <p class="founder-text">
+          Je m'appelle Romain. En pleine recomposition corporelle. J'ai cherché une app qui fasse nutrition + muscu + suivi sans devoir jongler entre trois outils. Elle n'existait pas. Alors je l'ai construite. Arisium, c'est l'app que j'utilise tous les jours pour atteindre 95 kg. Et maintenant, c'est la tienne aussi.
+        </p>
+
+        <!-- Barre de progression -->
+        <div class="founder-progress">
+          <div class="founder-progress-labels">
+            <span>117 kg</span>
+            <!-- Poids actuel (modifier manuellement) -->
+            <span class="founder-progress-current">109 kg</span>
+            <span>95 kg</span>
+          </div>
+          <div class="founder-progress-track">
+            <!-- Largeur = (117 - actuel) / (117 - 95) * 100. Pour 109 kg : (117-109)/(117-95) = 36% -->
+            <div class="founder-progress-fill" style="width:36%"></div>
+          </div>
+          <p class="founder-progress-note">Mis à jour chaque semaine.</p>
         </div>
       </div>
 
@@ -545,7 +587,7 @@
             <td class="arisium-col check">✓</td>
           </tr>
           <tr>
-            <td>UX sans gamification</td>
+            <td>Interface épurée, centrée résultats</td>
             <td class="cross">–</td>
             <td style="color:#8A8078;font-size:0.8125rem">Variable</td>
             <td class="arisium-col check">✓</td>
@@ -572,7 +614,7 @@
       <h3 class="primus-name">Primus</h3>
       <p class="primus-headline">Les 100 premiers. Pantheon au prix de Colosseum.</p>
       <p class="primus-body">Rejoins les fondateurs d'Arisium. Accès Pantheon complet, au tarif Colosseum, tant que ton abonnement reste actif.</p>
-      <a href="#waitlist" class="btn-primary primus-cta">Rejoindre la liste Primus →</a>
+      <a href="#waitlist" class="btn-primary primus-cta" data-primus="true">Réserver ma place Primus →</a>
       <p class="primus-counter"><!-- Places restantes (modifier le chiffre manuellement) --><span class="primus-counter-num">87</span>/100 places restantes</p>
     </div>
 
@@ -585,6 +627,13 @@
           <p class="tier-tagline">Commence à tracker. Zéro excuse.</p>
         </div>
         <p class="tier-desc">Accès aux fondamentaux : suivi nutritionnel, log d'entraînement, suivi du poids. Tout ce qu'il faut pour démarrer.</p>
+        <ul class="tier-features">
+          <li>Logging nutritionnel manuel</li>
+          <li>Workout tracker complet</li>
+          <li>Suivi du poids</li>
+          <li>5 recettes max</li>
+          <li>7 jours d'historique</li>
+        </ul>
       </div>
 
       <!-- Colosseum -->
@@ -594,6 +643,14 @@
           <p class="tier-tagline">L'abonnement pour un physique de gladiateur</p>
         </div>
         <p class="tier-desc">L'arène où tu te forges session après session. Estimation des macros par photo, programmes personnalisés, coach IA qui connaît ton historique. Chaque rep, chaque repas, chaque kilo compte.</p>
+        <ul class="tier-features">
+          <li class="tier-features-inherit">Tout le Gratuit +</li>
+          <li>Estimation des macros par photo (illimitée)</li>
+          <li>Programmes d'entraînement personnalisés</li>
+          <li>Photos de progression côte-à-côte</li>
+          <li>Historique complet</li>
+          <li>Coach IA contextuel</li>
+        </ul>
       </div>
 
       <!-- Pantheon -->
@@ -604,6 +661,14 @@
           <p class="tier-tagline">L'abonnement pour un physique de dieu</p>
         </div>
         <p class="tier-desc">Le temple au sommet. Analyse corporelle avancée, intelligence nutritionnelle complète, stratégie d'entraînement adaptée en temps réel. Chaque donnée alimente ta progression. Tu ne t'entraînes plus. Tu règnes.</p>
+        <ul class="tier-features">
+          <li class="tier-features-inherit">Tout le Colosseum +</li>
+          <li>Analyse corporelle avancée</li>
+          <li>Intelligence nutritionnelle complète (objectifs adaptatifs)</li>
+          <li>Stratégie d'entraînement ajustée en temps réel</li>
+          <li>Export données CSV/PDF</li>
+          <li>Accès prioritaire aux nouvelles fonctionnalités</li>
+        </ul>
       </div>
 
     </div>
@@ -796,21 +861,21 @@
   <div class="container" style="position:relative;z-index:1">
     <div class="eyebrow fade-up" style="justify-content:center"><span class="eyebrow-dot"></span>Bientôt disponible</div>
     <h2 class="cta-title fade-up delay-1">
-      Sois le premier<br>à en profiter.
+      Rejoins les fondateurs.
     </h2>
-    <p class="cta-sub fade-up delay-2">L'app arrive bientôt sur l'App Store et Google Play. Laisse ton email pour être notifié en avant-première.</p>
+    <p class="cta-sub fade-up delay-2">L'app arrive bientôt. Les 100 premières places donnent accès à Pantheon au prix de Colosseum, à vie tant que l'abonnement est actif.</p>
 
     <div class="fade-up delay-3" style="display:flex;justify-content:center">
       <form class="waitlist-form waitlist-form-cta" id="waitlist-cta" onsubmit="handleWaitlist(event,'cta')">
         <div class="waitlist-row">
           <input type="email" class="waitlist-input" id="waitlist-cta-email" placeholder="ton@email.com" autocomplete="email" required />
-          <button type="submit" class="btn-primary waitlist-submit" id="waitlist-cta-btn">Rejoindre la liste →</button>
+          <button type="submit" class="btn-primary waitlist-submit" id="waitlist-cta-btn">Réserver ma place →</button>
         </div>
         <div class="waitlist-msg" id="waitlist-cta-msg"></div>
       </form>
     </div>
 
-    <p class="cta-note fade-up delay-4">Gratuit · Aucun spam · Désabonnement en un clic</p>
+    <p class="cta-note fade-up delay-4">Gratuit · <span class="primus-counter-num">87</span>/100 places Primus restantes</p>
   </div>
 </section>
 
