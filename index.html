@@ -86,7 +86,7 @@
         </h1>
 
         <div class="fade-up delay-2" style="margin-bottom:24px">
-          <form class="waitlist-form" id="waitlist-hero" onsubmit="handleWaitlist(event,'hero')">
+          <form class="waitlist-form" id="waitlist-hero">
             <div class="waitlist-row">
               <input type="email" class="waitlist-input" id="waitlist-hero-email" placeholder="ton@email.com" autocomplete="email" required />
               <button type="submit" class="btn-primary waitlist-submit" id="waitlist-hero-btn">Réserver ma place fondateur →</button>
@@ -871,7 +871,7 @@
     <p class="cta-sub fade-up delay-2">L'app arrive bientôt. Les 100 premières places donnent accès à Pantheon au prix de Colosseum, à vie tant que l'abonnement est actif.</p>
 
     <div class="fade-up delay-3" style="display:flex;justify-content:center">
-      <form class="waitlist-form waitlist-form-cta" id="waitlist-cta" onsubmit="handleWaitlist(event,'cta')">
+      <form class="waitlist-form waitlist-form-cta" id="waitlist-cta">
         <div class="waitlist-row">
           <input type="email" class="waitlist-input" id="waitlist-cta-email" placeholder="ton@email.com" autocomplete="email" required />
           <button type="submit" class="btn-primary waitlist-submit" id="waitlist-cta-btn">Réserver ma place →</button>
@@ -969,7 +969,7 @@
 
       <p class="auth-switch">
         Pas encore de compte ?
-        <button type="button" class="auth-switch-btn" onclick="switchTab('signup')">S'inscrire gratuitement</button>
+        <button type="button" class="auth-switch-btn" data-switch-tab="signup">S'inscrire gratuitement</button>
       </p>
     </form>
 
@@ -995,7 +995,7 @@
 
       <p class="auth-switch">
         Déjà un compte ?
-        <button type="button" class="auth-switch-btn" onclick="switchTab('login')">Se connecter</button>
+        <button type="button" class="auth-switch-btn" data-switch-tab="login">Se connecter</button>
       </p>
     </form>
   </div>

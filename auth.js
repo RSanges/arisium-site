@@ -1,5 +1,17 @@
 /* ─── Supabase Auth — Arisium Landing Page (fetch natif, sans SDK) ────────────── */
 
+/* ─── Helpers ───────────────────────────────────────────────────────────────── */
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 /* ─── Config ─────────────────────────────────────────────────────────────────── */
 const SUPABASE_URL  = 'https://nyxenthjdmesyldymxcn.supabase.co';
 const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55eGVudGhqZG1lc3lsZHlteGNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxOTEzODMsImV4cCI6MjA4ODc2NzM4M30.LSuLxy6iJ2El5OBKbbrWHmFbGKqlhW6tXLYiHjSgvSM';
@@ -128,6 +140,10 @@ function switchTab(tab) {
 tabLogin.addEventListener('click',  () => switchTab('login'));
 tabSignup.addEventListener('click', () => switchTab('signup'));
 
+document.querySelectorAll('[data-switch-tab]').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.switchTab));
+});
+
 /* ─── Messages ───────────────────────────────────────────────────────────────── */
 function showMsg(id, msg, type) {
   const el = document.getElementById(id);
@@ -193,14 +209,14 @@ function setNavLoggedIn(user, firstName) {
 
   navAuthArea.innerHTML = `
     <div class="nav-user-menu">
-      <button class="nav-user-btn js-user-menu-btn" title="${user.email}">
-        <span class="nav-avatar">${initial}</span>
+      <button class="nav-user-btn js-user-menu-btn" title="${escHtml(user.email)}">
+        <span class="nav-avatar">${escHtml(initial)}</span>
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M2 4l4 4 4-4"/>
         </svg>
       </button>
       <div class="user-dropdown js-user-dropdown">
-        <div class="user-dropdown-email">${firstName ? firstName + ' · ' : ''}${user.email}</div>
+        <div class="user-dropdown-email">${firstName ? escHtml(firstName) + ' · ' : ''}${escHtml(user.email)}</div>
         <div class="user-dropdown-divider"></div>
         <button class="user-dropdown-item js-signout">Se déconnecter</button>
       </div>
@@ -210,7 +226,7 @@ function setNavLoggedIn(user, firstName) {
 function setNavLoggedOut() {
   navAuthArea.innerHTML = `
     <button class="btn-outline js-open-auth" style="padding:10px 20px;font-size:0.8125rem">Connexion</button>
-    <a href="#pricing" class="btn-primary nav-cta" style="padding:11px 24px">Essai gratuit 7 jours →</a>`;
+    <a href="#waitlist" class="btn-primary nav-cta" style="padding:11px 24px">Réserver ma place →</a>`;
 }
 
 /* ─── Session au chargement ──────────────────────────────────────────────────── */
@@ -241,15 +257,15 @@ formSignup.addEventListener('submit', async e => {
     if (data.error || data.msg) {
       const raw = data.error_description || data.msg || data.error || '';
       const msg = raw.includes('already registered')
-        ? 'Cet email est déjà utilisé. Essayez de vous connecter.'
+        ? 'Si ce compte n\'existe pas encore, un email de confirmation a été envoyé.'
         : raw || 'Erreur inconnue.';
-      showMsg('signup-error', msg, 'error');
+      showMsg(raw.includes('already registered') ? 'signup-success' : 'signup-error', msg, raw.includes('already registered') ? 'success' : 'error');
     } else {
-      showMsg('signup-success', '✓ Compte créé ! Vérifiez votre email pour confirmer.', 'success');
+      showMsg('signup-success', 'Si ce compte n\'existe pas encore, un email de confirmation a été envoyé.', 'success');
       formSignup.reset();
     }
   } catch {
-    showMsg('signup-error', 'Erreur réseau. Réessayez.', 'error');
+    showMsg('signup-error', 'Erreur réseau. Réessaie.', 'error');
   } finally {
     setLoading(btn, false);
   }
@@ -281,7 +297,7 @@ formLogin.addEventListener('submit', async e => {
       closeModal();
     }
   } catch {
-    showMsg('login-error', 'Erreur réseau. Réessayez.', 'error');
+    showMsg('login-error', 'Erreur réseau. Réessaie.', 'error');
   } finally {
     setLoading(btn, false);
   }
@@ -296,6 +312,11 @@ async function handleWaitlist(e, id) {
   const msg   = document.getElementById(`waitlist-${id}-msg`);
   const email = input.value.trim();
   if (!email) return;
+  if (!EMAIL_RE.test(email)) {
+    msg.textContent = 'Entre une adresse email valide.';
+    msg.className   = 'waitlist-msg error';
+    return;
+  }
 
   const origLabel = btn.textContent;
   btn.disabled    = true;
@@ -334,6 +355,9 @@ async function handleWaitlist(e, id) {
     btn.textContent = origLabel;
   }
 }
+
+document.getElementById('waitlist-hero')?.addEventListener('submit', e => handleWaitlist(e, 'hero'));
+document.getElementById('waitlist-cta')?.addEventListener('submit', e => handleWaitlist(e, 'cta'));
 
 /* ─── Sign out ───────────────────────────────────────────────────────────────── */
 async function signOut() {
