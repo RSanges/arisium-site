@@ -911,8 +911,9 @@ footer {
   .feature-grid.reverse .feature-visual { order: -1; }
   .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
   .tiers-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
-  .tier-pantheon { transform: none; }
+  .tier-pantheon { transform: none; order: -2; }
   .tier-pantheon:hover { transform: translateY(-3px); }
+  .tier-colosseum { order: -1; }
   .steps-grid { grid-template-columns: 1fr; }
   .steps-grid::before { display: none; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
