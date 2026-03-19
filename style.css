@@ -215,6 +215,7 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-s
   padding-bottom: 48px;
   box-sizing: border-box;
 }
+.hero-section > .container { width: 100%; }
 .hero-grid {
   display: grid;
   grid-template-columns: 1fr auto;
