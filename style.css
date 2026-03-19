@@ -929,6 +929,8 @@ footer {
   .hero-section { padding-top: 110px; padding-bottom: 56px; }
   .stat-num { font-size: 2rem; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .feature-visual { aspect-ratio: auto; }
+  .feature-visual-inner { padding: 20px; height: auto; }
   .primus-card { padding: 36px 24px 32px; }
   .primus-headline { font-size: 1.0625rem; }
   .footer-inner { grid-template-columns: 1fr; }
