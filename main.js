@@ -98,13 +98,15 @@ document.querySelectorAll('[data-primus="true"]').forEach(link => {
 });
 
 /* ─── Primus success message (MutationObserver) ────────────────────────────── */
+const PRIMUS_MSG = 'Ta place Primus est réservée. Tu recevras un accès prioritaire au lancement.';
+
 ['waitlist-hero-msg', 'waitlist-cta-msg'].forEach(id => {
   const msgEl = document.getElementById(id);
   if (!msgEl) return;
 
   const obs = new MutationObserver(() => {
-    if (window.primusMode && msgEl.classList.contains('success')) {
-      msgEl.textContent = 'Ta place Primus est réservée. Tu recevras un accès prioritaire au lancement.';
+    if (window.primusMode && msgEl.classList.contains('success') && msgEl.textContent !== PRIMUS_MSG) {
+      msgEl.textContent = PRIMUS_MSG;
     }
   });
   obs.observe(msgEl, { childList: true, attributes: true, attributeFilter: ['class'] });

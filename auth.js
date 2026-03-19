@@ -315,7 +315,7 @@ async function handleWaitlist(e, id) {
     });
 
     if (res.status === 201) {
-      msg.textContent = '✓ Inscrit ! Vous serez notifié dès le lancement.';
+      msg.textContent = '✓ Inscrit ! Tu seras notifié dès le lancement.';
       msg.className   = 'waitlist-msg success';
       input.value     = '';
       btn.textContent = '✓ Inscrit';
@@ -328,7 +328,7 @@ async function handleWaitlist(e, id) {
       throw new Error(`HTTP ${res.status}`);
     }
   } catch {
-    msg.textContent = 'Une erreur est survenue. Réessayez.';
+    msg.textContent = 'Une erreur est survenue. Réessaie.';
     msg.className   = 'waitlist-msg error';
     btn.disabled    = false;
     btn.textContent = origLabel;
