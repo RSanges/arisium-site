@@ -207,7 +207,14 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-s
 }
 
 /* ─── Hero ──────────────────────────────────────────────────────────────────── */
-.hero-section { padding-top: 140px; padding-bottom: 80px; }
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 96px;
+  padding-bottom: 48px;
+  box-sizing: border-box;
+}
 .hero-grid {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -1014,7 +1021,7 @@ footer {
   #burger { display: block; }
   .nav-links, .nav-cta { display: none; }
   .section { padding: 72px 20px; }
-  .hero-section { padding-top: 110px; padding-bottom: 56px; }
+  .hero-section { min-height: 100vh; padding-top: 96px; padding-bottom: 40px; }
   .stat-num { font-size: 2rem; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .feature-visual { aspect-ratio: auto; }
@@ -1027,7 +1034,7 @@ footer {
   .compare-table-wrap { border-radius: 14px; }
 }
 @media (max-width: 480px) {
-  .hero-section { padding-top: 100px; padding-bottom: 48px; }
+  .hero-section { min-height: 100svh; padding-top: 88px; padding-bottom: 32px; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .stat-num { font-size: 1.75rem; }
 }
