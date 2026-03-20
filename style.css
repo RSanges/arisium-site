@@ -1201,6 +1201,7 @@ footer {
 .rights-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
 .rights-item strong { display: block; color: var(--text); font-size: 0.875rem; margin-bottom: 4px; }
 .rights-item span { color: var(--text-sec); font-size: 0.8125rem; line-height: 1.5; }
+.legal-rights-contact { margin-top: 20px; }
 
 /* ─── Responsive ─────────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {

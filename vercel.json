@@ -13,7 +13,7 @@
         { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://nyxenthjdmesyldymxcn.supabase.co; img-src 'self' data: https://www.arisium.app; frame-ancestors 'none';"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://nyxenthjdmesyldymxcn.supabase.co; img-src 'self' data: https://www.arisium.app; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests;"
         }
       ]
     }
