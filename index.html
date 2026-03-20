@@ -44,9 +44,9 @@
       <li><a href="#faq">FAQ</a></li>
     </ul>
 
-    <div id="nav-auth-area" style="display:flex;align-items:center;gap:10px">
-      <button class="btn-outline js-open-auth" style="padding:10px 20px;font-size:0.8125rem;cursor:pointer">Connexion</button>
-      <a href="#waitlist" class="btn-primary nav-cta" style="padding:11px 24px">Réserver ma place →</a>
+    <div id="nav-auth-area">
+      <button class="btn-outline nav-auth-login js-open-auth">Connexion</button>
+      <a href="#waitlist" class="btn-primary nav-cta">Réserver ma place →</a>
     </div>
 
     <button id="burger" aria-label="Menu" aria-expanded="false">
@@ -61,8 +61,8 @@
       <li><a href="#features">Fonctionnalités</a></li>
       <li><a href="#compare">Comparaison</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><button class="js-open-auth" style="background:none;border:none;color:#8A8078;font-family:'DM Sans',sans-serif;font-size:0.9375rem;cursor:pointer;text-align:left;padding:0">Connexion / Inscription</button></li>
-      <li style="margin-top:8px"><a href="#waitlist" class="btn-primary" style="text-align:center;display:block">Réserver ma place →</a></li>
+      <li><button class="mobile-auth-btn js-open-auth">Connexion / Inscription</button></li>
+      <li class="mobile-menu-cta"><a href="#waitlist" class="btn-primary">Réserver ma place →</a></li>
     </ul>
   </div>
 </nav>
@@ -80,12 +80,12 @@
           iOS &amp; Android · Bientôt disponible
         </div>
 
-        <h1 class="fade-up delay-1" style="font-family:'Cinzel',serif;font-weight:400;font-size:clamp(2.75rem,6vw,4.5rem);line-height:1.1;color:#F5F0E8;margin-bottom:48px">
+        <h1 class="hero-title fade-up delay-1">
           Tu sais qui tu veux devenir.<br>
-          <em class="gold-text" style="font-style:italic">On sait comment.</em>
+          <em class="gold-text hero-subtitle">On sait comment.</em>
         </h1>
 
-        <div class="fade-up delay-2" style="margin-bottom:24px">
+        <div class="hero-waitlist-wrap fade-up delay-2">
           <form class="waitlist-form" id="waitlist-hero">
             <div class="waitlist-row">
               <input type="email" class="waitlist-input" id="waitlist-hero-email" placeholder="ton@email.com" autocomplete="email" required />
@@ -95,7 +95,7 @@
           </form>
         </div>
 
-        <p class="fade-up delay-3" style="font-size:0.8125rem;color:#5C5650">
+        <p class="hero-note fade-up delay-3">
           Gratuit · <span class="primus-counter-num">87</span>/100 places Primus restantes · Accès Pantheon au prix Colosseum
         </p>
       </div>
@@ -118,8 +118,8 @@
               <div class="phone-label">MACROS DU JOUR</div>
               <!-- Calorie ring -->
               <div class="calorie-ring-wrap">
-                <div style="position:relative;width:72px;height:72px">
-                  <svg viewBox="0 0 72 72" width="72" height="72" style="transform:rotate(-90deg)">
+                <div class="calorie-ring">
+                  <svg viewBox="0 0 72 72" width="72" height="72">
                     <circle cx="36" cy="36" r="30" fill="none" stroke="#1A1A1A" stroke-width="6"/>
                     <circle cx="36" cy="36" r="30" fill="none" stroke="url(#g1)" stroke-width="6"
                       stroke-linecap="round"
@@ -132,9 +132,9 @@
                       </linearGradient>
                     </defs>
                   </svg>
-                  <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-                    <div style="font-family:'Cinzel',serif;font-size:14px;color:#F5F0E8;line-height:1">1 420</div>
-                    <div style="font-size:6px;color:#8A8078">kcal</div>
+                  <div class="calorie-ring-center">
+                    <div class="calorie-ring-val">1 420</div>
+                    <div class="calorie-ring-unit">kcal</div>
                   </div>
                 </div>
               </div>
@@ -142,17 +142,17 @@
               <div class="macro-row">
                 <div class="macro-col">
                   <div class="macro-name">Protéines</div>
-                  <div class="macro-bar-track"><div class="macro-bar-fill" style="width:72%;background:#7B68EE"></div></div>
+                  <div class="macro-bar-track"><div class="macro-bar-fill macro-bar-fill--protein"></div></div>
                   <div class="macro-val">108g</div>
                 </div>
                 <div class="macro-col">
                   <div class="macro-name">Glucides</div>
-                  <div class="macro-bar-track"><div class="macro-bar-fill" style="width:55%;background:#FFB347"></div></div>
+                  <div class="macro-bar-track"><div class="macro-bar-fill macro-bar-fill--carbs"></div></div>
                   <div class="macro-val">110g</div>
                 </div>
                 <div class="macro-col">
                   <div class="macro-name">Lipides</div>
-                  <div class="macro-bar-track"><div class="macro-bar-fill" style="width:40%;background:#87CEEB"></div></div>
+                  <div class="macro-bar-track"><div class="macro-bar-fill macro-bar-fill--fat"></div></div>
                   <div class="macro-val">28g</div>
                 </div>
               </div>
@@ -171,17 +171,17 @@
             </div>
 
             <!-- Steps card -->
-            <div class="phone-card" style="margin-bottom:14px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
-                <div class="phone-label" style="margin-bottom:0">PAS AUJOURD'HUI</div>
-                <div style="font-size:7px;color:#5C5650">10 000 objectif</div>
+            <div class="phone-card phone-card--steps">
+              <div class="phone-steps-header">
+                <div class="phone-label phone-label--flush">PAS AUJOURD'HUI</div>
+                <div class="phone-steps-goal">10 000 objectif</div>
               </div>
-              <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px">
-                <div style="font-family:'Cinzel',serif;font-size:18px;color:#F5F0E8">7 432</div>
-                <div style="font-size:7px;color:#8A8078">pas</div>
+              <div class="phone-steps-count">
+                <div class="phone-steps-val">7 432</div>
+                <div class="phone-steps-unit">pas</div>
               </div>
-              <div style="height:3px;background:#1A1A1A;border-radius:2px;overflow:hidden">
-                <div style="height:100%;width:74%;background:#C9A96E;border-radius:2px"></div>
+              <div class="phone-steps-bar">
+                <div class="phone-steps-fill"></div>
               </div>
             </div>
           </div>
@@ -194,7 +194,7 @@
 
 
 <!-- ─── FONDATEUR ────────────────────────────────────────────────────────────── -->
-<section class="section-sm" style="border-bottom:1px solid #2A2A2A">
+<section class="section-sm section--bordered-bottom">
   <div class="container">
     <div class="founder-grid">
 
@@ -223,7 +223,7 @@
           </div>
           <div class="founder-progress-track">
             <!-- Largeur = (117 - actuel) / (117 - 95) * 100. Pour 109 kg : (117-109)/(117-95) = 36% -->
-            <div class="founder-progress-fill" style="width:36%"></div>
+            <div class="founder-progress-fill"></div>
           </div>
           <p class="founder-progress-note">Mis à jour chaque semaine.</p>
         </div>
@@ -264,7 +264,7 @@
   <div class="container">
 
     <!-- Feature 1: Photo AI -->
-    <div class="feature-grid" style="margin-bottom:120px">
+    <div class="feature-grid feature-grid--spaced">
       <div class="fade-up">
         <div class="eyebrow"><span class="eyebrow-dot"></span>Fonctionnalité #1</div>
         <h2 class="section-title">Photographie.<br>L'IA fait le reste.</h2>
@@ -286,10 +286,10 @@
         <div class="feature-visual-inner">
 
           <!-- En-tête -->
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div class="ai-header">
             <div>
-              <div style="font-size:0.625rem;letter-spacing:2px;text-transform:uppercase;color:#5C5650;margin-bottom:3px">Analyse IA</div>
-              <div style="font-size:0.9375rem;font-weight:600;color:#F5F0E8">Estimation du repas</div>
+              <div class="ai-header-label">Analyse IA</div>
+              <div class="ai-header-title">Estimation du repas</div>
             </div>
             <div class="ai-chip">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2zm0 18a8 8 0 100-16 8 8 0 000 16zm-1-9h2v6h-2zm0-4h2v2h-2z"/></svg>
@@ -298,28 +298,28 @@
           </div>
 
           <!-- Statut -->
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
-            <span style="width:5px;height:5px;border-radius:50%;background:#4ADE80;flex-shrink:0;display:inline-block"></span>
-            <span style="font-size:0.75rem;color:#5C5650">3 aliments détectés</span>
+          <div class="ai-status">
+            <span class="ai-status-dot"></span>
+            <span class="ai-status-text">3 aliments détectés</span>
           </div>
 
           <!-- Items -->
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div class="ai-item" style="border-left:3px solid #4ADE80">
+          <div class="ai-items">
+            <div class="ai-item ai-item--high">
               <div>
                 <div class="ai-item-name">Blanc de poulet grillé</div>
                 <div class="ai-item-kcal">150 g · 248 kcal · P 46g</div>
               </div>
               <span class="ai-item-badge badge-high">Sûr</span>
             </div>
-            <div class="ai-item" style="border-left:3px solid #FBBF24">
+            <div class="ai-item ai-item--medium">
               <div>
                 <div class="ai-item-name">Riz blanc cuit</div>
                 <div class="ai-item-kcal">200 g · 260 kcal · G 52g</div>
               </div>
               <span class="ai-item-badge badge-medium">Incertain</span>
             </div>
-            <div class="ai-item" style="border-left:3px solid #4ADE80">
+            <div class="ai-item ai-item--high">
               <div>
                 <div class="ai-item-name">Brocoli vapeur</div>
                 <div class="ai-item-kcal">120 g · 41 kcal · P 4g</div>
@@ -329,25 +329,25 @@
           </div>
 
           <!-- Total -->
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(201,169,110,0.06);border:1px solid rgba(201,169,110,0.18);border-radius:12px;margin-top:2px">
+          <div class="ai-total">
             <div>
-              <div style="font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;color:#8A8078;margin-bottom:2px">Total</div>
-              <div style="font-size:1.25rem;font-family:'Cinzel',serif;color:#C9A96E;letter-spacing:1px">549 kcal</div>
+              <div class="ai-total-label">Total</div>
+              <div class="ai-total-val">549 kcal</div>
             </div>
-            <div style="display:flex;gap:20px">
-              <div style="text-align:center">
-                <div style="font-size:0.875rem;font-weight:600;color:#F5F0E8">55g</div>
-                <div style="font-size:0.65rem;color:#5C5650;margin-top:1px">Prot.</div>
+            <div class="ai-total-macros">
+              <div class="ai-macro">
+                <div class="ai-macro-val">55g</div>
+                <div class="ai-macro-label">Prot.</div>
               </div>
-              <div style="width:1px;background:#2A2A2A;align-self:stretch"></div>
-              <div style="text-align:center">
-                <div style="font-size:0.875rem;font-weight:600;color:#F5F0E8">46g</div>
-                <div style="font-size:0.65rem;color:#5C5650;margin-top:1px">Gluc.</div>
+              <div class="ai-macro-divider"></div>
+              <div class="ai-macro">
+                <div class="ai-macro-val">46g</div>
+                <div class="ai-macro-label">Gluc.</div>
               </div>
-              <div style="width:1px;background:#2A2A2A;align-self:stretch"></div>
-              <div style="text-align:center">
-                <div style="font-size:0.875rem;font-weight:600;color:#F5F0E8">8g</div>
-                <div style="font-size:0.65rem;color:#5C5650;margin-top:1px">Lip.</div>
+              <div class="ai-macro-divider"></div>
+              <div class="ai-macro">
+                <div class="ai-macro-val">8g</div>
+                <div class="ai-macro-label">Lip.</div>
               </div>
             </div>
           </div>
@@ -357,7 +357,7 @@
     </div>
 
     <!-- Feature 2: Workout tracker -->
-    <div class="feature-grid reverse" style="margin-bottom:120px">
+    <div class="feature-grid reverse feature-grid--spaced">
       <div class="fade-up">
         <div class="eyebrow"><span class="eyebrow-dot"></span>Fonctionnalité #2</div>
         <h2 class="section-title">Un vrai tracker<br>de musculation.<br>Enfin intégré.</h2>
@@ -377,14 +377,14 @@
 
       <div class="feature-visual fade-up delay-2">
         <div class="feature-visual-inner">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:0.8125rem;font-weight:600;color:#F5F0E8">Push A · Pectoraux</span>
-            <span style="font-size:0.8125rem;color:#8A8078">⏱ 42 min</span>
+          <div class="workout-header">
+            <span class="workout-title">Push A · Pectoraux</span>
+            <span class="workout-time">⏱ 42 min</span>
           </div>
 
-          <div style="font-size:0.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#C9A96E">BENCH PRESS</div>
+          <div class="workout-exercise">BENCH PRESS</div>
 
-          <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="workout-sets">
             <div class="set-row">
               <div class="set-num">1</div>
               <div class="set-data">
@@ -399,7 +399,7 @@
                 <div class="set-field">8 <span>reps</span></div>
               </div>
             </div>
-            <div class="set-row" style="border:1px solid rgba(201,169,110,0.25)">
+            <div class="set-row set-row--pr">
               <div class="set-num">3</div>
               <div class="set-data">
                 <div class="set-field">85 <span>kg</span></div>
@@ -409,11 +409,11 @@
             </div>
           </div>
 
-          <div style="height:1px;background:#2A2A2A"></div>
+          <div class="workout-divider"></div>
 
-          <div style="font-size:0.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#C9A96E">OVERHEAD PRESS</div>
+          <div class="workout-exercise">OVERHEAD PRESS</div>
 
-          <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="workout-sets">
             <div class="set-row">
               <div class="set-num">1</div>
               <div class="set-data">
@@ -453,48 +453,48 @@
       </div>
 
       <div class="feature-visual fade-up delay-2">
-        <div class="feature-visual-inner" style="justify-content:flex-start">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div style="display:flex;align-items:center;gap:8px">
-              <span style="font-size:0.8125rem;font-weight:600;color:#F5F0E8">Poids corporel</span>
-              <span style="font-size:0.6rem;color:#5C5650;border:1px solid #2A2A2A;border-radius:4px;padding:1px 6px">Exemple</span>
+        <div class="feature-visual-inner feature-visual-inner--top">
+          <div class="progress-header">
+            <div class="progress-title-wrap">
+              <span class="progress-title">Poids corporel</span>
+              <span class="progress-badge">Exemple</span>
             </div>
-            <div style="display:flex;gap:8px">
-              <button style="padding:4px 12px;border-radius:8px;border:1px solid #2A2A2A;background:#1A1A1A;color:#8A8078;font-size:0.7rem;cursor:pointer">7j</button>
-              <button style="padding:4px 12px;border-radius:8px;border:1px solid #C9A96E;background:rgba(201,169,110,0.08);color:#C9A96E;font-size:0.7rem;cursor:pointer">30j</button>
-              <button style="padding:4px 12px;border-radius:8px;border:1px solid #2A2A2A;background:#1A1A1A;color:#8A8078;font-size:0.7rem;cursor:pointer">90j</button>
+            <div class="progress-range">
+              <button class="progress-range-btn">7j</button>
+              <button class="progress-range-btn progress-range-btn--active">30j</button>
+              <button class="progress-range-btn">90j</button>
             </div>
           </div>
 
-          <div style="display:flex;align-items:baseline;gap:8px">
-            <div style="font-family:'Cinzel',serif;font-size:2.25rem;color:#F5F0E8">83.2</div>
-            <div style="font-size:0.875rem;color:#8A8078">kg</div>
-            <div style="font-size:0.8125rem;color:#4CAF50;margin-left:4px">↓ 1.8kg ce mois</div>
+          <div class="progress-value">
+            <div class="progress-num">83.2</div>
+            <div class="progress-unit">kg</div>
+            <div class="progress-delta">↓ 1.8kg ce mois</div>
           </div>
 
           <!-- Chart bars -->
-          <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end">
-            <div style="display:flex;align-items:flex-end;gap:5px;height:100px;padding-bottom:4px">
-              <div style="flex:1;background:linear-gradient(to top,#8B6914,rgba(201,169,110,0.4));border-radius:3px 3px 0 0;height:75%"></div>
-              <div style="flex:1;background:linear-gradient(to top,#8B6914,rgba(201,169,110,0.4));border-radius:3px 3px 0 0;height:80%"></div>
-              <div style="flex:1;background:linear-gradient(to top,#8B6914,rgba(201,169,110,0.4));border-radius:3px 3px 0 0;height:72%"></div>
-              <div style="flex:1;background:linear-gradient(to top,#8B6914,rgba(201,169,110,0.4));border-radius:3px 3px 0 0;height:68%"></div>
-              <div style="flex:1;background:linear-gradient(to top,#8B6914,rgba(201,169,110,0.4));border-radius:3px 3px 0 0;height:64%"></div>
-              <div style="flex:1;background:linear-gradient(to top,#8B6914,rgba(201,169,110,0.4));border-radius:3px 3px 0 0;height:60%"></div>
-              <div style="flex:1;background:linear-gradient(to top,#C9A96E,#E8D5A3);border-radius:3px 3px 0 0;height:55%;box-shadow:0 0 8px rgba(201,169,110,0.3)"></div>
+          <div class="progress-chart">
+            <div class="progress-bars">
+              <div class="progress-bar"></div>
+              <div class="progress-bar"></div>
+              <div class="progress-bar"></div>
+              <div class="progress-bar"></div>
+              <div class="progress-bar"></div>
+              <div class="progress-bar"></div>
+              <div class="progress-bar progress-bar--current"></div>
             </div>
-            <div style="display:flex;justify-content:space-between">
-              <span style="font-size:0.625rem;color:#5C5650">15 fév</span>
-              <span style="font-size:0.625rem;color:#5C5650">1 mar</span>
-              <span style="font-size:0.625rem;color:#5C5650">15 mar</span>
+            <div class="progress-dates">
+              <span class="progress-date">15 fév</span>
+              <span class="progress-date">1 mar</span>
+              <span class="progress-date">15 mar</span>
             </div>
           </div>
 
           <!-- PR highlight -->
-          <div style="padding:12px 16px;background:rgba(201,169,110,0.06);border:1px solid rgba(201,169,110,0.15);border-radius:12px;display:flex;align-items:center;justify-content:space-between">
+          <div class="progress-pr">
             <div>
-              <div style="font-size:0.75rem;color:#8A8078">Dernier PR</div>
-              <div style="font-size:0.9375rem;font-weight:500;color:#F5F0E8">Bench Press · 85 kg</div>
+              <div class="progress-pr-label">Dernier PR</div>
+              <div class="progress-pr-val">Bench Press · 85 kg</div>
             </div>
             <div class="pr-badge">🏆 PR</div>
           </div>
@@ -507,11 +507,11 @@
 
 
 <!-- ─── HOW IT WORKS ───────────────────────────────────────────────────────────── -->
-<section class="section-sm" style="background:#0F0F0F;border-top:1px solid #2A2A2A;border-bottom:1px solid #2A2A2A">
+<section class="section-sm section--surface-bordered">
   <div class="container">
-    <div style="text-align:center;margin-bottom:64px">
-      <div class="eyebrow fade-up" style="justify-content:center"><span class="eyebrow-dot"></span>Simplicité</div>
-      <h2 class="section-title fade-up delay-1" style="text-align:center;margin:0 auto">En 3 clics. Chaque repas.</h2>
+    <div class="section-header section-header--lg">
+      <div class="eyebrow eyebrow--center fade-up"><span class="eyebrow-dot"></span>Simplicité</div>
+      <h2 class="section-title section-title--center fade-up delay-1">En 3 clics. Chaque repas.</h2>
     </div>
 
     <div class="steps-grid">
@@ -538,17 +538,17 @@
 <!-- ─── COMPARISON ────────────────────────────────────────────────────────────── -->
 <section class="section" id="compare">
   <div class="container">
-    <div style="text-align:center;margin-bottom:56px">
-      <div class="eyebrow fade-up" style="justify-content:center"><span class="eyebrow-dot"></span>Positionnement</div>
-      <h2 class="section-title fade-up delay-1" style="text-align:center;margin:0 auto">Pourquoi Arisium ?</h2>
-      <p class="section-sub fade-up delay-2" style="text-align:center;margin:12px auto 0">Une seule app à la place de deux, et une IA qui te fait gagner du temps à chaque repas.</p>
+    <div class="section-header">
+      <div class="eyebrow eyebrow--center fade-up"><span class="eyebrow-dot"></span>Positionnement</div>
+      <h2 class="section-title section-title--center fade-up delay-1">Pourquoi Arisium ?</h2>
+      <p class="section-sub section-sub--center fade-up delay-2">Une seule app à la place de deux, et une IA qui te fait gagner du temps à chaque repas.</p>
     </div>
 
     <div class="compare-table-wrap fade-up">
       <table class="compare-table">
         <thead>
           <tr>
-            <th style="text-align:left">Fonctionnalité</th>
+            <th>Fonctionnalité</th>
             <th>MyFitnessPal / Yazio</th>
             <th>App musculation seule</th>
             <th class="arisium-col">Arisium</th>
@@ -576,7 +576,7 @@
           <tr>
             <td>Détection automatique des PR</td>
             <td class="cross">–</td>
-            <td style="color:#8A8078;font-size:0.8125rem">Partiel</td>
+            <td class="compare-partial">Partiel</td>
             <td class="arisium-col check">✓</td>
           </tr>
           <tr>
@@ -594,7 +594,7 @@
           <tr>
             <td>Interface épurée, centrée résultats</td>
             <td class="cross">–</td>
-            <td style="color:#8A8078;font-size:0.8125rem">Variable</td>
+            <td class="compare-partial">Variable</td>
             <td class="arisium-col check">✓</td>
           </tr>
         </tbody>
@@ -605,16 +605,16 @@
 
 
 <!-- ─── TIERS ──────────────────────────────────────────────────────────────── -->
-<section class="section" id="tiers" style="background:#0F0F0F;border-top:1px solid #2A2A2A">
+<section class="section section--surface" id="tiers">
   <div class="container">
-    <div style="text-align:center;margin-bottom:56px">
-      <div class="eyebrow fade-up" style="justify-content:center"><span class="eyebrow-dot"></span>Abonnements</div>
-      <h2 class="section-title fade-up delay-1" style="text-align:center;margin:0 auto">Choisis ton niveau.</h2>
-      <p class="section-sub fade-up delay-2" style="text-align:center;margin:12px auto 0">Trois formules. Un seul objectif : ta transformation.</p>
+    <div class="section-header">
+      <div class="eyebrow eyebrow--center fade-up"><span class="eyebrow-dot"></span>Abonnements</div>
+      <h2 class="section-title section-title--center fade-up delay-1">Choisis ton niveau.</h2>
+      <p class="section-sub section-sub--center fade-up delay-2">Trois formules. Un seul objectif : ta transformation.</p>
     </div>
 
     <!-- Primus -->
-    <div class="primus-card fade-up" style="margin-bottom:40px">
+    <div class="primus-card fade-up">
       <div class="tier-badge">Offre Fondateur</div>
       <h3 class="primus-name">Primus</h3>
       <p class="primus-headline">Les 100 premiers. Pantheon au prix de Colosseum.</p>
@@ -776,10 +776,10 @@
 
 <!-- ─── FAQ ───────────────────────────────────────────────────────────────────── -->
 <section class="section" id="faq">
-  <div class="container" style="max-width:720px">
-    <div style="text-align:center;margin-bottom:56px">
-      <div class="eyebrow fade-up" style="justify-content:center"><span class="eyebrow-dot"></span>Questions fréquentes</div>
-      <h2 class="section-title fade-up delay-1" style="text-align:center;margin:0 auto">Tout ce que tu<br>veux savoir.</h2>
+  <div class="container faq-container">
+    <div class="section-header">
+      <div class="eyebrow eyebrow--center fade-up"><span class="eyebrow-dot"></span>Questions fréquentes</div>
+      <h2 class="section-title section-title--center fade-up delay-1">Tout ce que tu<br>veux savoir.</h2>
     </div>
 
     <div class="faq-list fade-up">
@@ -862,15 +862,15 @@
 
 
 <!-- ─── CTA FINAL ──────────────────────────────────────────────────────────────── -->
-<section id="waitlist" class="cta-section" style="background:#0F0F0F;border-top:1px solid #2A2A2A">
-  <div class="container" style="position:relative;z-index:1">
-    <div class="eyebrow fade-up" style="justify-content:center"><span class="eyebrow-dot"></span>Bientôt disponible</div>
+<section id="waitlist" class="cta-section">
+  <div class="container">
+    <div class="eyebrow eyebrow--center fade-up"><span class="eyebrow-dot"></span>Bientôt disponible</div>
     <h2 class="cta-title fade-up delay-1">
       Rejoins les fondateurs.
     </h2>
     <p class="cta-sub fade-up delay-2">L'app arrive bientôt. Les 100 premières places donnent accès à Pantheon au prix de Colosseum, à vie tant que l'abonnement est actif.</p>
 
-    <div class="fade-up delay-3" style="display:flex;justify-content:center">
+    <div class="cta-form-wrap fade-up delay-3">
       <form class="waitlist-form waitlist-form-cta" id="waitlist-cta">
         <div class="waitlist-row">
           <input type="email" class="waitlist-input" id="waitlist-cta-email" placeholder="ton@email.com" autocomplete="email" required />
@@ -889,7 +889,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="/" class="logo" style="font-size:1rem">ARISIUM</a>
+      <a href="/" class="logo footer-logo">ARISIUM</a>
       <p>Nutrition intelligente et workout tracker intégré.<br>Transforme-toi sans te perdre dans la complexité.</p>
     </div>
 
@@ -924,7 +924,7 @@
 
   <div class="footer-bottom">
     <span>© 2026 Arisium. Tous droits réservés.</span>
-    <span style="color:#5C5650">Fait avec ♥ et de la rigueur.</span>
+    <span class="footer-credit">Fait avec ♥ et de la rigueur.</span>
   </div>
 </footer>
 
@@ -942,8 +942,8 @@
     </button>
 
     <!-- Logo -->
-    <div style="text-align:center;margin-bottom:28px">
-      <div class="logo" id="modal-title" style="font-size:1.25rem;display:inline-block">ARISIUM</div>
+    <div class="auth-logo-wrap">
+      <div class="logo auth-logo" id="modal-title">ARISIUM</div>
     </div>
 
     <!-- Tabs -->
@@ -974,7 +974,7 @@
     </form>
 
     <!-- ── SIGNUP FORM ── -->
-    <form id="form-signup" class="auth-form" novalidate style="display:none">
+    <form id="form-signup" class="auth-form" novalidate>
       <div class="auth-field">
         <label class="auth-label" for="signup-email">Email</label>
         <input class="auth-input" type="email" id="signup-email" placeholder="ton@email.com" autocomplete="email" required />

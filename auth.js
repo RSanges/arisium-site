@@ -165,6 +165,29 @@ function setLoading(btn, on) {
   btn.textContent = on ? 'Chargement...' : btn.dataset.label;
 }
 
+/* ─── Rate limiting (backoff exponentiel) ────────────────────────────────────── */
+const authBackoff = { login: 0, signup: 0 };
+
+function applyBackoff(type, btn) {
+  const attempts = authBackoff[type];
+  if (attempts < 1) return;
+  const delay = Math.min(Math.pow(2, attempts) * 1000, 30000);
+  btn.disabled = true;
+  const orig = btn.dataset.label;
+  const countdown = setInterval(() => {
+    const remaining = Math.max(0, Math.ceil((delay - (Date.now() - btn._backoffStart)) / 1000));
+    if (remaining > 0) {
+      btn.textContent = `Patiente ${remaining}s...`;
+    } else {
+      clearInterval(countdown);
+      btn.disabled = false;
+      btn.textContent = orig;
+    }
+  }, 250);
+  btn._backoffStart = Date.now();
+  setTimeout(() => { clearInterval(countdown); btn.disabled = false; btn.textContent = orig; }, delay);
+}
+
 /* ─── Phone mockup ───────────────────────────────────────────────────────────── */
 const GENERIC_NAME = 'Thomas';
 
@@ -201,32 +224,73 @@ function updateMockup(firstName, user) {
 
 updateMockup(null, null);
 
-/* ─── Navbar state ───────────────────────────────────────────────────────────── */
+/* ─── Navbar state (DOM API — pas d'innerHTML) ───────────────────────────────── */
 function setNavLoggedIn(user, firstName) {
   const initial = firstName
     ? firstName[0].toUpperCase()
     : (user.email || '?')[0].toUpperCase();
 
-  navAuthArea.innerHTML = `
-    <div class="nav-user-menu">
-      <button class="nav-user-btn js-user-menu-btn" title="${escHtml(user.email)}">
-        <span class="nav-avatar">${escHtml(initial)}</span>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M2 4l4 4 4-4"/>
-        </svg>
-      </button>
-      <div class="user-dropdown js-user-dropdown">
-        <div class="user-dropdown-email">${firstName ? escHtml(firstName) + ' · ' : ''}${escHtml(user.email)}</div>
-        <div class="user-dropdown-divider"></div>
-        <button class="user-dropdown-item js-signout">Se déconnecter</button>
-      </div>
-    </div>`;
+  navAuthArea.textContent = '';
+
+  const menu = document.createElement('div');
+  menu.className = 'nav-user-menu';
+
+  const btn = document.createElement('button');
+  btn.className = 'nav-user-btn js-user-menu-btn';
+  btn.title = user.email;
+
+  const avatar = document.createElement('span');
+  avatar.className = 'nav-avatar';
+  avatar.textContent = initial;
+  btn.appendChild(avatar);
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '12');
+  svg.setAttribute('height', '12');
+  svg.setAttribute('viewBox', '0 0 12 12');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '1.5');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', 'M2 4l4 4 4-4');
+  svg.appendChild(path);
+  btn.appendChild(svg);
+
+  const dropdown = document.createElement('div');
+  dropdown.className = 'user-dropdown js-user-dropdown';
+
+  const emailDiv = document.createElement('div');
+  emailDiv.className = 'user-dropdown-email';
+  emailDiv.textContent = (firstName ? firstName + ' · ' : '') + user.email;
+  dropdown.appendChild(emailDiv);
+
+  const divider = document.createElement('div');
+  divider.className = 'user-dropdown-divider';
+  dropdown.appendChild(divider);
+
+  const signoutBtn = document.createElement('button');
+  signoutBtn.className = 'user-dropdown-item js-signout';
+  signoutBtn.textContent = 'Se déconnecter';
+  dropdown.appendChild(signoutBtn);
+
+  menu.appendChild(btn);
+  menu.appendChild(dropdown);
+  navAuthArea.appendChild(menu);
 }
 
 function setNavLoggedOut() {
-  navAuthArea.innerHTML = `
-    <button class="btn-outline js-open-auth" style="padding:10px 20px;font-size:0.8125rem">Connexion</button>
-    <a href="#waitlist" class="btn-primary nav-cta" style="padding:11px 24px">Réserver ma place →</a>`;
+  navAuthArea.textContent = '';
+
+  const loginBtn = document.createElement('button');
+  loginBtn.className = 'btn-outline nav-auth-login js-open-auth';
+  loginBtn.textContent = 'Connexion';
+  navAuthArea.appendChild(loginBtn);
+
+  const ctaLink = document.createElement('a');
+  ctaLink.href = '#waitlist';
+  ctaLink.className = 'btn-primary nav-cta';
+  ctaLink.textContent = 'Réserver ma place →';
+  navAuthArea.appendChild(ctaLink);
 }
 
 /* ─── Session au chargement ──────────────────────────────────────────────────── */
@@ -255,19 +319,24 @@ formSignup.addEventListener('submit', async e => {
   try {
     const data = await authPost('/signup', { email, password: pwd });
     if (data.error || data.msg) {
+      authBackoff.signup++;
       const raw = data.error_description || data.msg || data.error || '';
-      const msg = raw.includes('already registered')
+      const isExisting = raw.includes('already registered');
+      const msg = isExisting
         ? 'Si ce compte n\'existe pas encore, un email de confirmation a été envoyé.'
-        : raw || 'Erreur inconnue.';
-      showMsg(raw.includes('already registered') ? 'signup-success' : 'signup-error', msg, raw.includes('already registered') ? 'success' : 'error');
+        : 'Erreur inconnue.';
+      showMsg(isExisting ? 'signup-success' : 'signup-error', msg, isExisting ? 'success' : 'error');
     } else {
+      authBackoff.signup = 0;
       showMsg('signup-success', 'Si ce compte n\'existe pas encore, un email de confirmation a été envoyé.', 'success');
       formSignup.reset();
     }
   } catch {
+    authBackoff.signup++;
     showMsg('signup-error', 'Erreur réseau. Réessaie.', 'error');
   } finally {
     setLoading(btn, false);
+    applyBackoff('signup', btn);
   }
 });
 
@@ -284,12 +353,11 @@ formLogin.addEventListener('submit', async e => {
   try {
     const data = await authPost('/token?grant_type=password', { email, password: pwd });
     if (data.error || data.error_code) {
-      const raw = data.error_description || data.msg || data.error || '';
-      const msg = raw.toLowerCase().includes('invalid login')
-        ? 'Email ou mot de passe incorrect.'
-        : raw || 'Email ou mot de passe incorrect.';
+      authBackoff.login++;
+      const msg = 'Email ou mot de passe incorrect.';
       showMsg('login-error', msg, 'error');
     } else {
+      authBackoff.login = 0;
       saveSession(data);
       const firstName = await fetchFirstName(data.user.id, data.access_token);
       setNavLoggedIn(data.user, firstName);
@@ -297,9 +365,11 @@ formLogin.addEventListener('submit', async e => {
       closeModal();
     }
   } catch {
+    authBackoff.login++;
     showMsg('login-error', 'Erreur réseau. Réessaie.', 'error');
   } finally {
     setLoading(btn, false);
+    applyBackoff('login', btn);
   }
 });
 
