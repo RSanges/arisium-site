@@ -1158,6 +1158,10 @@ footer {
 /* ─── FAQ Container ──────────────────────────────────────────────────────────── */
 .faq-container { max-width: 720px; }
 
+/* ─── CTA Form ───────────────────────────────────────────────────────────────── */
+.cta-form-wrap { display: flex; justify-content: center; }
+.cta-form-wrap .waitlist-form { width: auto; }
+
 /* ─── Footer Overrides ───────────────────────────────────────────────────────── */
 .footer-logo { font-size: 1rem; }
 .footer-credit { color: var(--text-muted); }
